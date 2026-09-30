@@ -3,6 +3,11 @@
 Este arquivo orienta a revisão dos Pull Requests deste projeto. A revisão deve
 ser educativa, objetiva e baseada no código realmente alterado.
 
+## Idioma obrigatório
+
+Todas as avaliações, comentários de Pull Request, solicitações de mudança e
+issues de correção devem ser escritos em português claro e objetivo.
+
 ## Objetivo da revisão
 
 Verifique se o Pull Request:
