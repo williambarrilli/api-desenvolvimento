@@ -1,0 +1,23 @@
+{
+  "name": "api-desenvolvimento",
+  "version": "1.0.0",
+  "description": "API Hello World em camadas para desenvolvimento com Express",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "keywords": [
+    "express",
+    "api",
+    "hello-world"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
