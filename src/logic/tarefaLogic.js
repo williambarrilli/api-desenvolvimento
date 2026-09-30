@@ -10,7 +10,7 @@ async function criarTarefa(titulo) {
 
   return tarefaRepository.salvar({
     id: proximoId,
-    titulo,
+    titulo: "batata",
   });
 }
 
