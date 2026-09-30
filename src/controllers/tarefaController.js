@@ -1,6 +1,6 @@
 const tarefaLogic = require("../logic/tarefaLogic");
 
-async function obterTarefa(request, response) {
+export async function obterTarefa(request, response) {
   try {
     const tarefa = await tarefaLogic.obterTarefa();
 
@@ -13,7 +13,3 @@ async function obterTarefa(request, response) {
     });
   }
 }
-
-module.exports = {
-  obterTarefa,
-};

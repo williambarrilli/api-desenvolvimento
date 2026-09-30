@@ -7,6 +7,22 @@ O projeto começa retornando uma tarefa e separa o código em três camadas:
 controller -> logic -> repository -> data/tarefa.json
 ```
 
+## Fluxo visual
+
+```mermaid
+flowchart LR
+    cliente["Aluno ou curl"] -->|"GET /"| servidor["src/server.js"]
+    servidor --> controller["Controller: tarefaController"]
+    controller --> logic["Logic: tarefaLogic"]
+    logic --> repository["Repository: tarefaRepository"]
+    repository <-->|"Lê e salva"| arquivo[("data/tarefa.json")]
+    repository --> resultado["Tarefa encontrada"]
+    resultado --> resposta["Resposta JSON 200"]
+```
+
+Em resumo: o aluno faz uma requisição, o `server.js` encaminha para o
+controller, a logic coordena o caso de uso e o repository acessa o arquivo.
+
 ## Como executar
 
 Pré-requisito: Node.js instalado.
