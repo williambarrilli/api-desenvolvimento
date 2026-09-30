@@ -13,7 +13,7 @@ async function criarTarefa(dados) {
     titulo: dados.titulo,
     descricao: dados.descricao,
     prioridade: dados.prioridade,
-    concluida: dados.concluida || true,
+    concluida: dados.concluida ?? false,
   };
 
   await tarefaRepository.salvar([...tarefas, tarefa]);
