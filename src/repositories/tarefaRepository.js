@@ -20,6 +20,8 @@ async function ler() {
 
 async function salvar(tarefas) {
   const conteudo = `${JSON.stringify(tarefas, null, 2)}\n`;
+
+  await fs.mkdir(path.dirname(caminhoArquivo), { recursive: true });
   await fs.writeFile(caminhoArquivo, conteudo, "utf-8");
   return tarefas;
 }
