@@ -45,6 +45,12 @@ Durante o desenvolvimento, use o Nodemon:
 npm run dev
 ```
 
+Para verificar a qualidade do código sem executar testes unitários:
+
+```bash
+npm run lint
+```
+
 A API ficará disponível em `http://localhost:3000`.
 
 ## Endpoint inicial
