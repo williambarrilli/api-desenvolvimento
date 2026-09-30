@@ -114,4 +114,4 @@ O repository recria o arquivo com a tarefa padrão se ele ainda não existir.
 - Criar tratamento centralizado de erros.
 - Adicionar testes automatizados para controller, logic e repository.
 - Substituir o arquivo JSON por outro mecanismo de persistência.
-- Documentar a API com exemplos de requisições e respostas.
+- Documentar a API com exemplos de requisições e respostas. 
