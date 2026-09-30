@@ -75,6 +75,20 @@ Teste com:
 curl http://localhost:3000/
 ```
 
+## Criar tarefa
+
+### `POST /tarefas`
+
+Cria uma tarefa com título obrigatório e dados opcionais:
+
+```bash
+curl -X POST http://localhost:3000/tarefas \
+  -H "Content-Type: application/json" \
+  -d '{"titulo":"Estudar POO","descricao":"Revisar classes e objetos","prioridade":"alta","concluida":false}'
+```
+
+A resposta de sucesso utiliza HTTP `201`.
+
 ## Organização do código
 
 - `src/server.js`: configura o Express e registra a rota.
