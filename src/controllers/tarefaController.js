@@ -28,6 +28,16 @@ async function criarTarefa(request, response) {
     });
   }
 
+  if (
+    (descricao !== undefined && typeof descricao !== "string") ||
+    (prioridade !== undefined && typeof prioridade !== "string") ||
+    (concluida !== undefined && typeof concluida !== "boolean")
+  ) {
+    return response.status(400).json({
+      mensagem: "Os dados da tarefa são inválidos",
+    });
+  }
+
   try {
     const tarefa = await tarefaLogic.criarTarefa({
       titulo,

@@ -8,12 +8,16 @@ async function obterTarefa() {
 
 async function criarTarefa(dados) {
   const tarefas = await tarefaRepository.ler();
+  const ids = tarefas
+    .map((tarefa) => Number(tarefa.id))
+    .filter((id) => Number.isInteger(id));
+  const proximoId = (ids.length > 0 ? Math.max(...ids) : 0) + 1;
   const tarefa = {
-    id: tarefas.length,
-    titulo: dados.titulo,
+    id: proximoId,
+    titulo: dados.titulo.trim(),
     descricao: dados.descricao,
     prioridade: dados.prioridade,
-    concluida: dados.concluida || true,
+    concluida: dados.concluida ?? false,
   };
 
   await tarefaRepository.salvar([...tarefas, tarefa]);
