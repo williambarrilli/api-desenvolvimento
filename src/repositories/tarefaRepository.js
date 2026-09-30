@@ -1,7 +1,7 @@
 const fs = require("fs/promises");
 const path = require("path");
 
-const caminhoArquivo = path.join(__dirname, "../../data/tarefa.json");
+const caminhoArquivo = path.join(process.cwd(), "data", "tarefa.json");
 
 async function ler() {
   try {
