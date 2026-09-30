@@ -3,19 +3,28 @@ const path = require("path");
 
 const caminhoArquivo = path.join(__dirname, "../../data/tarefa.json");
 
-export async function ler() {
+async function ler() {
   try {
     const conteudo = await fs.readFile(caminhoArquivo, "utf-8");
-    return JSON.parse(conteudo);
+    const dados = JSON.parse(conteudo);
+
+    return Array.isArray(dados) ? dados : [dados];
   } catch (error) {
     if (error.code !== "ENOENT") {
       throw error;
     }
+
+    return [];
   }
 }
 
-export async function salvar(tarefa) {
-  const conteudo = `${JSON.stringify(tarefa, null, 2)}\n`;
+async function salvar(tarefas) {
+  const conteudo = `${JSON.stringify(tarefas, null, 2)}\n`;
   await fs.writeFile(caminhoArquivo, conteudo, "utf-8");
-  return tarefa;
+  return tarefas;
 }
+
+module.exports = {
+  ler,
+  salvar,
+};

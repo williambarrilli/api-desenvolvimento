@@ -75,6 +75,25 @@ Teste com:
 curl http://localhost:3000/
 ```
 
+## Criar tarefa
+
+### `POST /tarefas`
+
+Cria uma tarefa recebendo o título e os demais dados opcionais:
+
+```bash
+curl -X POST http://localhost:3000/tarefas \
+  -H "Content-Type: application/json" \
+  -d '{
+    "titulo": "Estudar Express",
+    "descricao": "Revisar rotas e controllers",
+    "prioridade": "media",
+    "concluida": false
+  }'
+```
+
+A resposta de sucesso utiliza HTTP `201` e retorna a tarefa criada em JSON.
+
 ## Organização do código
 
 - `src/server.js`: configura o Express e registra a rota.
