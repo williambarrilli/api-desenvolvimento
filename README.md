@@ -1,10 +1,10 @@
 # API de desenvolvimento
 
 API mínima em Express para os alunos praticarem desenvolvimento por issues.
-O projeto começa com apenas um Hello World e separa o código em três camadas:
+O projeto começa retornando uma tarefa e separa o código em três camadas:
 
 ```text
-controller -> logic -> repository -> data/hello.json
+controller -> logic -> repository -> data/tarefa.json
 ```
 
 ## Como executar
@@ -35,11 +35,15 @@ A API ficará disponível em `http://localhost:3000`.
 
 ### `GET /`
 
-Retorna a mensagem persistida no arquivo `data/hello.json`:
+Retorna a tarefa persistida no arquivo `data/tarefa.json`:
 
 ```json
 {
-  "mensagem": "Hello World"
+  "id": 1,
+  "titulo": "Aprender Express",
+  "descricao": "Implementar a primeira tarefa da API",
+  "prioridade": "media",
+  "concluida": false
 }
 ```
 
@@ -52,17 +56,19 @@ curl http://localhost:3000/
 ## Organização do código
 
 - `src/server.js`: configura o Express e registra a rota.
-- `src/controllers/helloController.js`: recebe a requisição e monta a resposta HTTP.
-- `src/logic/helloLogic.js`: representa a regra de negócio do caso de uso.
-- `src/repositories/helloRepository.js`: lê e grava diretamente o arquivo JSON.
-- `data/hello.json`: armazenamento inicial da mensagem.
+- `src/controllers/tarefaController.js`: recebe a requisição e monta a resposta HTTP.
+- `src/logic/tarefaLogic.js`: representa a regra de negócio do caso de uso.
+- `src/repositories/tarefaRepository.js`: lê e grava diretamente o arquivo JSON.
+- `data/tarefa.json`: armazenamento inicial da tarefa.
 
-O repository recria o arquivo com a mensagem padrão se ele ainda não existir.
+O repository recria o arquivo com a tarefa padrão se ele ainda não existir.
 
 ## Sugestões de issues para os alunos
 
-- Criar uma rota `GET /saudacao` com uma mensagem personalizada.
-- Permitir alterar a mensagem usando `PUT` ou `PATCH`.
+- Criar uma rota `GET /tarefas` para listar tarefas.
+- Permitir cadastrar uma tarefa usando `POST`.
+- Permitir alterar uma tarefa usando `PUT` ou `PATCH`.
+- Permitir remover uma tarefa usando `DELETE`.
 - Validar o formato do corpo das requisições.
 - Criar tratamento centralizado de erros.
 - Adicionar testes automatizados para controller, logic e repository.

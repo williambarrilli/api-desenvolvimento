@@ -1,10 +1,10 @@
 const express = require("express");
-const helloController = require("./controllers/helloController");
+const tarefaController = require("./controllers/tarefaController");
 
 const app = express();
 const PORTA = Number(process.env.PORT || 3000);
 
-app.get("/", helloController.hello);
+app.get("/", tarefaController.obterTarefa);
 
 if (require.main === module) {
   app.listen(PORTA, () => {

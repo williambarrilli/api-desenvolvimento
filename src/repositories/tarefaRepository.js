@@ -1,8 +1,14 @@
 const fs = require("fs/promises");
 const path = require("path");
 
-const caminhoArquivo = path.join(__dirname, "../../data/hello.json");
-const mensagemInicial = { mensagem: "Hello World" };
+const caminhoArquivo = path.join(__dirname, "../../data/tarefa.json");
+const tarefaInicial = {
+  id: 1,
+  titulo: "Aprender Express",
+  descricao: "Implementar a primeira tarefa da API",
+  prioridade: "media",
+  concluida: false,
+};
 
 async function ler() {
   try {
@@ -13,14 +19,14 @@ async function ler() {
       throw error;
     }
 
-    return salvar(mensagemInicial);
+    return salvar(tarefaInicial);
   }
 }
 
-async function salvar(dados) {
-  const conteudo = `${JSON.stringify(dados, null, 2)}\n`;
+async function salvar(tarefa) {
+  const conteudo = `${JSON.stringify(tarefa, null, 2)}\n`;
   await fs.writeFile(caminhoArquivo, conteudo, "utf-8");
-  return dados;
+  return tarefa;
 }
 
 module.exports = {

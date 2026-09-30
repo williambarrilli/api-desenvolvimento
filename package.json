@@ -1,7 +1,7 @@
 {
   "name": "api-desenvolvimento",
   "version": "1.0.0",
-  "description": "API Hello World em camadas para desenvolvimento com Express",
+  "description": "API de tarefas em camadas para desenvolvimento com Express",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
@@ -10,7 +10,7 @@
   "keywords": [
     "express",
     "api",
-    "hello-world"
+    "tarefas"
   ],
   "author": "",
   "license": "ISC",
