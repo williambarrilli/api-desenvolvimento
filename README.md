@@ -110,7 +110,7 @@ O repository recria o arquivo com a tarefa padrão se ele ainda não existir.
 - Permitir cadastrar uma tarefa usando `POST`.
 - Permitir alterar uma tarefa usando `PUT` ou `PATCH`.
 - Permitir remover uma tarefa usando `DELETE`.
-- Validar o formato do corpo das requisições.
+- Validar o formato do corpo das requisições. 
 - Criar tratamento centralizado de erros. 
 - Adicionar testes automatizados para controller, logic e repository.
 - Substituir o arquivo JSON por outro mecanismo de persistência.
