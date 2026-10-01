@@ -1,7 +1,30 @@
-{
-  "id": 1,
-  "titulo": "Aprender Express",
-  "descricao": "Implementar a primeira tarefa da API",
-  "prioridade": "media",
-  "concluida": false
-}
+[
+  {
+    "id": 1,
+    "titulo": "Aprender Express",
+    "descricao": "Implementar a primeira tarefa da API",
+    "prioridade": "media",
+    "concluida": false
+  },
+  {
+    "id": 2,
+    "titulo": "Título da tarefa",
+    "descricao": "descricao da tarefa",
+    "prioridade": "alta",
+    "concluida": false
+  },
+  {
+    "id": 3,
+    "titulo": "Título da tarefa",
+    "descricao": "descricao da tarefa",
+    "prioridade": "alta",
+    "concluida": false
+  },
+  {
+    "id": 4,
+    "titulo": "Título da tarefa",
+    "descricao": "descricao da tarefa",
+    "prioridade": "alta",
+    "concluida": false
+  }
+]
