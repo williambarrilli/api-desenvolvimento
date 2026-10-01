@@ -1,4 +1,4 @@
-const tarefaLogic = require("../logic/tarefaLogic");
+import * as tarefaLogic from "../logic/tarefaLogic.js";
 
 export async function obterTarefa(request, response) {
   try {

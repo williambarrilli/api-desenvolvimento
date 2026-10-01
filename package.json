@@ -2,6 +2,7 @@
   "name": "api-desenvolvimento",
   "version": "1.0.0",
   "description": "API de tarefas em camadas para desenvolvimento com Express",
+  "type": "module",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",

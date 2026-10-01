@@ -1,5 +1,5 @@
-const fs = require("fs/promises");
-const path = require("path");
+import fs from "node:fs/promises";
+import path from "node:path";
 
 const caminhoArquivo = path.join(process.cwd(), "data", "tarefa.json");
 
