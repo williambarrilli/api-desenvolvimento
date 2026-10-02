@@ -5,7 +5,29 @@ import * as tarefaController from "./controllers/tarefaController.js";
 const app = express();
 const PORTA = Number(process.env.PORT || 3000);
 
+// Permite que o SimuladorRequest.html seja aberto fora deste projeto.
+app.use((request, response, next) => {
+  response.setHeader("Access-Control-Allow-Origin", "*");
+  response.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET,POST,PATCH,DELETE,OPTIONS",
+  );
+  response.setHeader(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization",
+  );
+
+  if (request.method === "OPTIONS") {
+    return response.sendStatus(204);
+  }
+
+  next();
+});
+
 app.use(express.json());
+
+
+app.post("/tarefa", tarefaController.criarTarefa)
 
 app.get("/", tarefaController.obterTarefa);
 

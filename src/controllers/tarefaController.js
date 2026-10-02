@@ -13,3 +13,15 @@ export async function obterTarefa(request, response) {
     });
   }
 }
+export async function criarTarefa(request, response) {
+  try {
+      
+    const tarefa = await tarefaLogic.criarTarefa(request.body)
+    response.status(200).json(tarefa)
+
+  } catch (error){
+        console.log("branca")
+        console.error(`Erro ao obter tarefa: ${error.message}`)
+  }
+}
+  

@@ -25,3 +25,4 @@ export async function salvar(tarefas) {
   await fs.writeFile(caminhoArquivo, conteudo, "utf-8");
   return tarefas;
 }
+
