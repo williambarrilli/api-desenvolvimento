@@ -5,9 +5,27 @@ import * as tarefaController from "./controllers/tarefaController.js";
 const app = express();
 const PORTA = Number(process.env.PORT || 3000);
 
+app.use((request, response, next) => {
+  response.setHeader("Access-Control-Allow-Origin", "*");
+  response.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET,POST,PATCH,DELETE,OPTIONS",
+  );
+  response.setHeader(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization",
+  );
+
+  if (request.method === "OPTIONS") {
+    return response.sendStatus(204);
+  }
+
+  next();
+});
+
 app.use(express.json());
 
-app.get("/", tarefaController.obterTarefa);
+app.get("/tarefas/:id", tarefaController.obterTarefa);
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   app.listen(PORTA, () => {
