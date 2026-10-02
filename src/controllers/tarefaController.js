@@ -8,7 +8,7 @@ export async function obterTarefa(request, response) {
   } catch (error) {
     console.error(`Erro ao obter tarefa: ${error.message}`);
 
-    return response.status(500).json({
+    return response.status(400).json({
       mensagem: "Erro interno do servidor",
     });
   }
