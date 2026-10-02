@@ -5,12 +5,5 @@
     "descricao": "Implementar a primeira tarefa da API",
     "prioridade": "media",
     "concluida": false
-  },
-  {
-    "id": 2,
-    "titulo": "Aprender Express xxxx",
-    "descricao": "Implementar a primeira tarefa da API",
-    "prioridade": "media",
-    "concluida": false
   }
 ]
