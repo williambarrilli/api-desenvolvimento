@@ -22,7 +22,7 @@ export async function criarTarefa(request, response ) {
 
   } catch (error) {
     console.error(`Erro ao criar tarefa: ${error.message}`);
-
+    
     return response.status(400).json({
       mensagem: error.message,
     });

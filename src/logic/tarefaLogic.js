@@ -13,7 +13,7 @@ export async function criarTarefa(novaTarefa) {
     let prioridade = ''
     let concluida = false
 
-    if (novaTarefa.titulo !== undefined && novaTarefa.titulo !== '') {
+    if (novaTarefa.titulo !== undefined && novaTarefa.titulo.trim() !== '') {
       titulo = novaTarefa.titulo;
     } else {
       console.error(`Para criar uma tarefa é obrigatório informar o título!`)
