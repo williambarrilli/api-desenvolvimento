@@ -8,7 +8,7 @@ export async function ler() {
     const conteudo = await fs.readFile(caminhoArquivo, "utf-8");
     const dados = JSON.parse(conteudo);
 
-    return Array.isArray(dados) ? dados : [dados];
+    return dados;
   } catch (error) {
     if (error.code !== "ENOENT") {
       throw error;
