@@ -13,3 +13,21 @@ export async function obterTarefa(request, response) {
     });
   }
 }
+
+export async function removerTarefa(request, response) {
+  try {
+    const tarefa = await tarefaLogic.removerTarefa(request.params.id);
+
+    return response.status(200).json(tarefa);
+  } catch (error) {
+    if (error.status) {
+      return response.status(error.status).json({ mensagem: error.message });
+    }
+
+    console.error(`Erro ao remover tarefa: ${error.message}`);
+
+    return response.status(500).json({
+      mensagem: "Erro interno do servidor",
+    });
+  }
+}
