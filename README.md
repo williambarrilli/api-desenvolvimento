@@ -51,6 +51,12 @@ Para verificar a qualidade do código sem executar testes unitários:
 npm run lint
 ```
 
+Para executar os testes automatizados:
+
+```bash
+npm test
+```
+
 A API ficará disponível em `http://localhost:3000`.
 
 ## Endpoint inicial
@@ -75,13 +81,33 @@ Teste com:
 curl http://localhost:3000/
 ```
 
+### `GET /tarefas/:id`
+
+Consulta uma tarefa específica pelo identificador.
+
+- Identificador existente: retorna HTTP 200 com os dados da tarefa.
+- Identificador que não é um número inteiro positivo (ex.: `abc`, `-1`, `0`, `1.5`): retorna HTTP 400.
+- Identificador válido sem tarefa correspondente: retorna HTTP 404.
+
+A consulta é somente leitura e não altera os dados persistidos em `data/tarefa.json`.
+
+Teste com:
+
+```bash
+curl http://localhost:3000/tarefas/1
+curl -i http://localhost:3000/tarefas/abc
+curl -i http://localhost:3000/tarefas/999
+```
+
 ## Organização do código
 
-- `src/server.js`: configura o Express e registra a rota.
+- `src/server.js`: configura o Express e registra as rotas.
 - `src/controllers/tarefaController.js`: recebe a requisição e monta a resposta HTTP.
-- `src/logic/tarefaLogic.js`: representa a regra de negócio do caso de uso.
+- `src/logic/tarefaLogic.js`: representa a regra de negócio dos casos de uso.
 - `src/repositories/tarefaRepository.js`: lê e grava diretamente o arquivo JSON.
-- `data/tarefa.json`: armazenamento inicial da tarefa.
+- `src/utils/erroHttp.js`: erro customizado para que a logic sinalize o status HTTP adequado.
+- `data/tarefa.json`: armazenamento das tarefas.
+- `tests/`: testes automatizados executados com `npm test` (usa o test runner nativo do Node).
 
 O repository recria o arquivo com a tarefa padrão se ele ainda não existir.
 
