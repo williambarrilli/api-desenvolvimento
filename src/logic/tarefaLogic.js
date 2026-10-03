@@ -4,6 +4,10 @@ export async function obterTarefa() {
   return tarefaRepository.ler();
 }
 
+export async function listarTarefas() {
+  return tarefaRepository.ler();
+}
+
 export async function criarTarefa(dados = {}) {
   if (typeof dados.titulo !== "string" || dados.titulo.trim() === "") {
     const erro = new Error("O campo titulo é obrigatório.");
