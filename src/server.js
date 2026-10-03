@@ -28,6 +28,10 @@ app.use(express.json());
 
 app.get("/", tarefaController.obterTarefa);
 
+// Precisa vir antes de qualquer rota "/tarefas/:id", senão o Express
+// entenderia "resumo" como o valor do :id.
+app.get("/tarefas/resumo", tarefaController.obterResumo);
+
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   app.listen(PORTA, () => {
     console.log(`API disponível em http://localhost:${PORTA}`);
