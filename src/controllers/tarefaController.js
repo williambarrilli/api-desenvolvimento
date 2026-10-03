@@ -13,3 +13,35 @@ export async function obterTarefa(request, response) {
     });
   }
 }
+
+export async function listarTarefas(request, response) {
+  try {
+    const tarefas = await tarefaLogic.listarTarefas();
+
+    return response.status(200).json(tarefas);
+  } catch (error) {
+    console.error(`Erro ao listar tarefas: ${error.message}`);
+
+    return response.status(500).json({
+      mensagem: "Erro interno do servidor",
+    });
+  }
+}
+
+export async function criarTarefa(request, response) {
+  try {
+    const tarefa = await tarefaLogic.criarTarefa(request.body);
+
+    return response.status(201).json(tarefa);
+  } catch (error) {
+    if (error.status) {
+      return response.status(error.status).json({ mensagem: error.message });
+    }
+
+    console.error(`Erro ao criar tarefa: ${error.message}`);
+
+    return response.status(500).json({
+      mensagem: "Erro interno do servidor",
+    });
+  }
+}
