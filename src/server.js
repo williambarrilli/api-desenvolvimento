@@ -27,6 +27,7 @@ app.use((request, response, next) => {
 app.use(express.json());
 
 app.get("/", tarefaController.obterTarefa);
+app.patch("/tarefas/:id", tarefaController.atualizarTarefa);
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   app.listen(PORTA, () => {
