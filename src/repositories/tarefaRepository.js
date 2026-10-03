@@ -1,7 +1,9 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const caminhoArquivo = path.join(process.cwd(), "data", "tarefa.json");
+const diretorioAtual = path.dirname(fileURLToPath(import.meta.url));
+const caminhoArquivo = path.join(diretorioAtual, "..", "..", "data", "tarefa.json");
 
 export async function ler() {
   try {
