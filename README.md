@@ -75,6 +75,16 @@ Teste com:
 curl http://localhost:3000/
 ```
 
+## Listar tarefas
+
+### `GET /tarefas`
+
+Retorna as tarefas persistidas no arquivo de dados:
+
+```bash
+curl http://localhost:3000/tarefas
+```
+
 ## Organização do código
 
 - `src/server.js`: configura o Express e registra a rota.
