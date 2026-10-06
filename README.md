@@ -53,6 +53,21 @@ npm run lint
 
 A API ficará disponível em `http://localhost:3000`.
 
+## Fluxo de entrega por card
+
+Para cada card, crie uma branch a partir da `main`, valide a alteração e
+abra um Pull Request antes de fazer o merge:
+
+```bash
+git switch main
+git pull --ff-only origin main
+git switch -c feature/us-2728-exemplo
+npm run lint
+git add .
+git commit -m "[US-2728] Atualiza tarefa"
+git push -u origin feature/us-2728-exemplo
+```
+
 ## Endpoint inicial
 
 ### `GET /`
