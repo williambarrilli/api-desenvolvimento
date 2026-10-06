@@ -13,14 +13,7 @@ export async function criarTarefa(tarefa) {
       concluida: false
       }
 
-      if (!tarefa.titulo) {
-        console.log("batata")
-       return response.status(400).json({ mensagem: "O campo titulo é obrigatório" });
-      }
-      else{
-        console.log(" rosa")
-         novaTarefa.titulo = tarefa.titulo
-      }
+      if(tarefa.titulo) novaTarefa.titulo = tarefa.titulo
       if(tarefa.descricao) novaTarefa.descricao = tarefa.descricao
       if(tarefa.concluida) novaTarefa.concluida = tarefa.concluida
       tarefas.push(novaTarefa)
