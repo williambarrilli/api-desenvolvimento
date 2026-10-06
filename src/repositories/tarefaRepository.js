@@ -18,6 +18,12 @@ export async function ler() {
   }
 }
 
+export async function listar() {
+  const dados = await ler();
+
+  return Array.isArray(dados) ? dados : [dados];
+}
+
 export async function salvar(tarefas) {
   const conteudo = `${JSON.stringify(tarefas, null, 2)}\n`;
 
