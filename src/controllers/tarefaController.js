@@ -16,7 +16,9 @@ export async function obterTarefa(request, response) {
 export async function criarTarefa(request, response) {
   try {
     const {titulo} = request.body
-    if(!titulo || titulo.trim()===""){response.status(400).json({mensagem: `titulo é obrigatorio`})}
+    if(!titulo || titulo.trim()===""){
+      response.status(400).json({mensagem: `titulo é obrigatorio`})
+    }
     else{
       const tarefa = await tarefaLogic.criarTarefa(request.body)
 

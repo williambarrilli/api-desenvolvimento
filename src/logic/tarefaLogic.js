@@ -17,7 +17,6 @@ export async function criarTarefa(tarefa) {
       if(tarefa.descricao) novaTarefa.descricao = tarefa.descricao
       if(tarefa.concluida) novaTarefa.concluida = tarefa.concluida
       tarefas.push(novaTarefa)
-      console.log(tarefas)
       tarefaRepository.salvar(tarefas)
       return novaTarefa
 
