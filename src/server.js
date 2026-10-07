@@ -1,6 +1,7 @@
 import express from "express";
 import { fileURLToPath } from "node:url";
 import * as tarefaController from "./controllers/tarefaController.js";
+import * as usuarioController from "./controllers/usuarioController.js";
 
 const app = express();
 const PORTA = Number(process.env.PORT || 3000);
@@ -29,6 +30,8 @@ app.use(express.json());
 app.get("/", tarefaController.obterTarefa);
 app.get("/tarefas", tarefaController.listarTarefas);
 app.post("/tarefas", tarefaController.cadastrarTarefa);
+
+app.post("/usuarios", usuarioController.cadastrarUsuario);
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   app.listen(PORTA, () => {
