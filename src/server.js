@@ -27,7 +27,7 @@ app.use((request, response, next) => {
 app.use(express.json());
 
 
-app.post("/tarefa", tarefaController.criarTarefa)
+app.post("/tarefas", tarefaController.criarTarefa)
 
 app.get("/", tarefaController.obterTarefa);
 
