@@ -15,7 +15,7 @@ export async function obterTarefa(request, response) {
 }
 export async function criarTarefa(request, response) {
   try {
-    const {titulo,prioridade} = request.body
+    const {titulo} = request.body
     if(!titulo || titulo.trim()===""){
       console.log(` rato`)
       response.status(400).json({mensagem: `titulo é obrigatorio`})
