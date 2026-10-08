@@ -32,7 +32,7 @@ export async function criarTarefa(request, response) {
     const {titulo} = request.body
     if(!titulo || titulo.trim()===""){return response.status(400)({mesagem: "titulo é obrigatorio"})}
 
-    const tarefa = await tarefaLogic.criarTarefa();
+    const tarefa = await tarefaLogic.criarTarefa(request.body);
 
     return response.status(201).json(tarefa);
   } catch (error) {

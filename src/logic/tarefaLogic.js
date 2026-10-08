@@ -12,7 +12,7 @@ export function listarTarefas() {
 }
 export function criarTarefa(tarefa){
   const novaTarefa = {}
-
+  console.log("batata")
   if(tarefa.titulo)novaTarefa.titulo =tarefa.titulo
   if(tarefa.descricao)novaTarefa.descricao=tarefa.descricao
   if(PRIORIDADE.includes(tarefa.prioridade.toLowerCase())){novaTarefa.prioridade=tarefa.prioridade}
