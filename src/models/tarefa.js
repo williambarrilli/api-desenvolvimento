@@ -15,9 +15,17 @@ export class Tarefa {
     descricao = "",
     prioridade = "media",
     concluida = false,
+    usuarioId = null,
   }) {
     if (typeof titulo !== "string" || titulo.trim() === "") {
       throw new ErroDeValidacao("O campo titulo é obrigatório");
+    }
+
+    const prioridades = ["baixa", "media", "alta"];
+    if (!prioridades.includes(prioridade)) {
+      throw new ErroDeValidacao(
+        `O campo prioridade deve ser: ${prioridades.join(", ")}`,
+      );
     }
 
     this.id = id;
@@ -25,5 +33,6 @@ export class Tarefa {
     this.descricao = descricao;
     this.prioridade = prioridade;
     this.concluida = concluida;
+    this.usuarioId = usuarioId;
   }
 }
