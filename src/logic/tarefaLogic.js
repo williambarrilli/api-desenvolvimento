@@ -16,6 +16,10 @@ export async function criarTarefa(tarefa) {
       if(tarefa.titulo) novaTarefa.titulo = tarefa.titulo
       if(tarefa.descricao) novaTarefa.descricao = tarefa.descricao
       if(tarefa.concluida) novaTarefa.concluida = tarefa.concluida
+      if(!tarefa.prioridade){novaTarefa.prioridade = "media"}
+      else{
+        tarefa.prioridade = novaTarefa.prioridade 
+      }
       tarefas.push(novaTarefa)
       tarefaRepository.salvar(tarefas)
       return novaTarefa

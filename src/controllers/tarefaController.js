@@ -1,3 +1,4 @@
+const PRIORIDADES = [`alta`,`media`,`baixa`]
 import * as tarefaLogic from "../logic/tarefaLogic.js";
 
 export async function obterTarefa(request, response) {
@@ -15,15 +16,17 @@ export async function obterTarefa(request, response) {
 }
 export async function criarTarefa(request, response) {
   try {
-    const {titulo} = request.body
+    const {titulo,prioridade} = request.body
     if(!titulo || titulo.trim()===""){
       response.status(400).json({mensagem: `titulo é obrigatorio`})
     }
-    else{
+    if(!PRIORIDADES.includes(prioridade.toLowerCase())){
+      response.status(400).json({mensagem: `Prioridade deve ser entre, alta, media , baixa`})
+    }
       const tarefa = await tarefaLogic.criarTarefa(request.body)
 
       response.status(201).json(tarefa)
-      }
+      
 
   } catch (error){
         console.log("branca")
