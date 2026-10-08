@@ -1,3 +1,4 @@
+const PRIORIDADES = [`alta`,`media`,`baixa`]
 import * as tarefaRepository from "../repositories/tarefaRepository.js";
 
 export async function obterTarefa() {
@@ -16,9 +17,13 @@ export async function criarTarefa(tarefa) {
       if(tarefa.titulo) novaTarefa.titulo = tarefa.titulo
       if(tarefa.descricao) novaTarefa.descricao = tarefa.descricao
       if(tarefa.concluida) novaTarefa.concluida = tarefa.concluida
+
       if(!tarefa.prioridade){novaTarefa.prioridade = "media"}
+      else if(!PRIORIDADES.includes(prioridade.toLowerCase())){
+       return response.status(400).json({mensagem: `Prioridade deve ser entre, alta, media , baixa`})
+      }
       else{
-        tarefa.prioridade = novaTarefa.prioridade 
+        novaTarefa.prioridade = tarefa.prioridade 
       }
       tarefas.push(novaTarefa)
       tarefaRepository.salvar(tarefas)

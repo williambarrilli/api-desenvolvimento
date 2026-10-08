@@ -1,4 +1,3 @@
-
 [
   {
     "id": 1,
@@ -6,6 +5,25 @@
     "descricao": "Implementar a primeira tarefa da API",
     "prioridade": "media",
     "concluida": false
+  },
+  {
+    "id": 2,
+    "concluida": false,
+    "titulo": "Estudar POO",
+    "descricao": "Revisar classes e objetos",
+    "prioridade": "alta"
+  },
+  {
+    "id": 3,
+    "concluida": false,
+    "titulo": "Persistir tarefa",
+    "descricao": "Verificar arquivo de dados",
+    "prioridade": "alta"
+  },
+  {
+    "id": 4,
+    "concluida": false,
+    "titulo": "Estudar POO",
+    "prioridade": "media"
   }
 ]
-
