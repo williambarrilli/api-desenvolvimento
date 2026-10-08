@@ -21,7 +21,7 @@ export async function criarTarefa(tarefa) {
         novaTarefa.prioridade = "media"
       }
       else if(!PRIORIDADES.includes(tarefa.prioridade.toLowerCase())){
-       return response.status(400).json({mensagem: `Prioridade deve ser entre, alta, media , baixa`})
+       return {mensagem: `Prioridade deve ser entre, alta, media , baixa`}
       }
       else{
         novaTarefa.prioridade = tarefa.prioridade 
