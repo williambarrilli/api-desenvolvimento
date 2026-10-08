@@ -56,3 +56,5 @@ export async function criarTarefa(novaTarefa) {
     throw new Error(`Erro ao criar tarefa: ${error.message}`);
   }
 }
+
+
