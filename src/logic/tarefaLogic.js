@@ -13,10 +13,10 @@ export function listarTarefas() {
 export function cadastrarTarefa(requestBody) {
   const novaTarefa = {
     titulo: requestBody.titulo,
-    descricao: requestBody.descricao || "",
+    descricao: requestBody.descricao,
     prioridade: requestBody.prioridade,
     concluida: requestBody.concluida,
     usuarioId: requestBody.usuarioId,
   };
-  tarefaRepository.criar(novaTarefa);
+  return tarefaRepository.criar(novaTarefa);
 }
