@@ -3,15 +3,13 @@ import * as tarefaLogic from "../logic/tarefaLogic.js";
 export async function obterTarefa(request, response) {
   try {
     const id = request.params.id
-    console.log(typeof(id))
-    console.log(id)
+
     if((isNaN(id))){
-      console.log("arroz", id)
       return response.status(400).json({mensagem: "ID deve ser um numero"})
     }
     console.log("batata")
     const tarefa = await tarefaLogic.obterTarefa(id);
-    if(tarefa === null){return response.status(400).json({mensagem: "tarefa nao encotrada"})}
+    if(tarefa === null){return response.status(404).json({mensagem: "tarefa nao encotrada"})}
     return response.status(200).json(tarefa);
   } catch (error) {
     console.error(`Erro ao obter tarefa: ${error.message}`);
