@@ -17,6 +17,8 @@ export function cadastrarTarefa(requestBody){
     prioridade: requestBody.prioridade,
     concluida: requestBody.concluida,
     usuarioId: requestBody.usuarioId,
+
+    
   };
-  tarefaRepository.criar(novaTarefa);
+  return tarefaRepository.criar(novaTarefa);
 }
