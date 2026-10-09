@@ -29,7 +29,7 @@ export function buscarPorId(id) {
 }
 
 // Cria uma tarefa e retorna o registro completo com o id gerado pelo banco.
-export function criar(tarefa) {
+export function cadastrarTarefa(tarefa) {
   const resultado = db
     .prepare(
       `

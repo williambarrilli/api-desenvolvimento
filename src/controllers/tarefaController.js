@@ -27,3 +27,18 @@ export async function listarTarefas(request, response) {
     });
   }
 }
+
+export async function cadastrarTarefa(request, response) {
+  try {
+    const {titulo, descricao, prioridade, concluida, usuarioID} = request.body
+    const tarefas = await tarefaLogic.cadastrarTarefa(titulo, descricao, prioridade, concluida, usuarioID);
+
+    return response.status(201).json(tarefas);
+  } catch (error) {
+    console.error(`Erro ao listar tarefas: ${error.message}`);
+
+    return response.status(500).json({
+      mensagem: "Erro interno do servidor",
+    });
+  }
+}
