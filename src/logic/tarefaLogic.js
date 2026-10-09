@@ -13,7 +13,7 @@ export function listarTarefas() {
 export function cadastrarTarefa(requestBody){
   const novaTarefa = {
     titulo: requestBody.titulo,
-    decricao: requestBody.decricao,
+    descricao: requestBody.descricao,
     prioridade: requestBody.prioridade,
     concluida: requestBody.concluida,
     usuarioId: requestBody.usuarioId,
