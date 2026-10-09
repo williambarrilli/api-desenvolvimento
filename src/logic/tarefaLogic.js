@@ -8,7 +8,9 @@ export function obterTarefa() {
 
 // A logic coordena a consulta; somente o repository conhece o SQL.
 export function listarTarefas() {
-  return tarefaRepository.listar();
+  const tarefas = tarefaRepository.listar()
+  if(!tarefas){return "lista vazia"}
+  return tarefas;
 }
 export function criarTarefa(tarefa){
   console.log("criando nova tarefa...")
