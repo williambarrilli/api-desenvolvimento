@@ -3,6 +3,7 @@ import * as tarefaRepository from "../repositories/tarefaRepository.js";
 
 // Mantém a rota inicial GET / retornando a primeira tarefa do banco.
 export function obterTarefa(id) {
+  
   return tarefaRepository.buscarPorId(id);
 }
 
