@@ -39,7 +39,7 @@ export async function  cadastrarTarefa(request, response) {
     } 
     const tarefa = await tarefaLogic.cadastrarTarefa(request.body);
 
-    return response.status(201).json({mensagem: titulo})
+    return response.status(201).json(`Tarefa criada: ${titulo}`)
   }catch (error){
       console.error(`erro ao criar tarefas: ${error.message}`);
     
