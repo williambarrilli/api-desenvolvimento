@@ -7,7 +7,6 @@ export async function obterTarefa(request, response) {
     if((isNaN(id))){
       return response.status(400).json({mensagem: "ID deve ser um numero"})
     }
-    console.log("batata")
     const tarefa = await tarefaLogic.obterTarefa(id);
     if(tarefa === null){return response.status(404).json({mensagem: "tarefa nao encotrada"})}
     return response.status(200).json(tarefa);
