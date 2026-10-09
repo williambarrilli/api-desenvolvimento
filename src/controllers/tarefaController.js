@@ -27,3 +27,20 @@ export async function listarTarefas(request, response) {
     });
   }
 }
+export async function criarTarefa(request, response) {
+  try {
+    const {titulo} = request.body
+    console.log(titulo)
+    if(titulo === undefined || titulo.trim()===""){return response.status(400).json({mesagem: "titulo é obrigatorio"})}
+
+    const tarefa = await tarefaLogic.criarTarefa(request.body);
+
+    return response.status(201).json(tarefa);
+  } catch (error) {
+    console.error(`Erro ao criar tarefa: ${error.message}`);
+
+    return response.status(500).json({
+      mensagem: "Erro interno do servidor",
+    });
+  }
+}
