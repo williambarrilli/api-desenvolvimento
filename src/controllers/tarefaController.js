@@ -34,7 +34,6 @@ export async function listarTarefas(request, response) {
 export async function criarTarefa(request, response) {
   try {
     const {titulo} = request.body
-    console.log(titulo)
     if(titulo === undefined || titulo.trim()===""){return response.status(400).json({mesagem: "titulo é obrigatorio"})}
 
     const tarefa = await tarefaLogic.criarTarefa(request.body);

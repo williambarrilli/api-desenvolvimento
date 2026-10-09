@@ -13,7 +13,6 @@ export function listarTarefas() {
   return tarefas;
 }
 export function criarTarefa(tarefa){
-  console.log("criando nova tarefa...")
   const novaTarefa = {}
   if(tarefa.titulo)novaTarefa.titulo =tarefa.titulo
   if(tarefa.descricao)novaTarefa.descricao=tarefa.descricao
