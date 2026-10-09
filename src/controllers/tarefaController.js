@@ -14,6 +14,18 @@ export async function obterTarefa(request, response) {
   }
 }
 
+export async function criarTarefa(request, response) {
+  try {
+    const tarefa = await tarefaLogic.criarTarefa(request.body);
+
+    return response.status(201).json(tarefa);
+  } catch (error) {
+    return response.status(400).json({
+      mensagem: error.message,
+    });
+  }
+}
+
 export async function listarTarefas(request, response) {
   try {
     const tarefas = await tarefaLogic.listarTarefas();
