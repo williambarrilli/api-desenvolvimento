@@ -11,13 +11,13 @@ export function listarTarefas() {
   return tarefaRepository.listar();
 }
 export function criarTarefa(tarefa){
+  console.log("criando nova tarefa...")
   const novaTarefa = {}
-  console.log("batata")
   if(tarefa.titulo)novaTarefa.titulo =tarefa.titulo
   if(tarefa.descricao)novaTarefa.descricao=tarefa.descricao
-  if(PRIORIDADE.includes(tarefa.prioridade.toLowerCase())){novaTarefa.prioridade=tarefa.prioridade}
-  else if(!tarefa.prioridade || tarefa.prioridade.trim() === ""){
-    novaTarefa.prioridade = "media"
+  if(!tarefa.prioridade || tarefa.prioridade.trim() === ""){novaTarefa.prioridade = "media"}
+  else if(PRIORIDADE.includes(tarefa.prioridade.toLowerCase())){
+    novaTarefa.prioridade=tarefa.prioridade
   }
   if(tarefa.concluida)novaTarefa.concluida = tarefa.concluida
   if(tarefa.usuarioId)novaTarefa.usuarioId=tarefa.usuarioId
