@@ -9,3 +9,13 @@ export function obterTarefa() {
 export function listarTarefas() {
   return tarefaRepository.listar();
 }
+export function cadastrarTarefas(body) {
+  const novaTarefa={
+    titulo:body.titulo,
+    descricao:body.descricao,
+    prioridade:body.prioridade,
+    concluida:body.concluida,
+    usuarioId:body.usuarioId,
+  }
+  return tarefaRepository.criar(novaTarefa);
+}
