@@ -8,10 +8,7 @@ const PORTA = Number(process.env.PORT || 3000);
 // Permite que o SimuladorRequest.html seja aberto fora deste projeto.
 app.use((request, response, next) => {
   response.setHeader("Access-Control-Allow-Origin", "*");
-  response.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET,OPTIONS",
-  );
+  response.setHeader("Access-Control-Allow-Methods","GET,OPTIONS",);
   response.setHeader(
     "Access-Control-Allow-Headers",
     "Content-Type, Authorization",
@@ -28,6 +25,7 @@ app.use(express.json());
 
 app.get("/", tarefaController.obterTarefa);
 app.get("/tarefas", tarefaController.listarTarefas);
+app.post("/tarefas", tarefaController.cadastrarTarefa);
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   app.listen(PORTA, () => {
