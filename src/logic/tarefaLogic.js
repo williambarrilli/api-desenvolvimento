@@ -12,7 +12,7 @@ export function listarTarefas() {
 }
 
 export function criarTarefa(dados) {
-  const tarefa = new Tarefa(dados);
+  const tarefa = new Tarefa(dados)
 
   return tarefaRepository.criar(tarefa);
 }
