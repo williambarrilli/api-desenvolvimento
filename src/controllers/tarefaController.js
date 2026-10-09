@@ -33,7 +33,7 @@ export async function  cadastrarTarefa(request, response) {
   try{
     const { titulo } = request.body;
     
-    if(titulo === undefined || titulo.trim === ""){
+    if(titulo === undefined || titulo.trim() === ""){
       return response.status(400).json({
         mensagem: "O campo titulo é obrigatorio",
       });
