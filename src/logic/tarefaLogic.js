@@ -2,8 +2,8 @@ const PRIORIDADE = ["alta","media","baixa"]
 import * as tarefaRepository from "../repositories/tarefaRepository.js";
 
 // Mantém a rota inicial GET / retornando a primeira tarefa do banco.
-export function obterTarefa() {
-  return tarefaRepository.buscarPorId(1);
+export function obterTarefa(id) {
+  return tarefaRepository.buscarPorId(id);
 }
 
 // A logic coordena a consulta; somente o repository conhece o SQL.

@@ -2,7 +2,11 @@ import * as tarefaLogic from "../logic/tarefaLogic.js";
 
 export async function obterTarefa(request, response) {
   try {
-    const tarefa = await tarefaLogic.obterTarefa();
+    const {id} = request.body
+    if(!Number(id)){
+      return response.status(400).json({mensagem: "ID deve ser um numero"})
+    }
+    const tarefa = await tarefaLogic.obterTarefa(id);
 
     return response.status(200).json(tarefa);
   } catch (error) {
