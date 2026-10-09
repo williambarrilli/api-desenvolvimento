@@ -31,6 +31,11 @@ export async function listarTarefas(request, response) {
 export async function cadastrarTarefa(request, response) {
   try {
     const {titulo, descricao, prioridade, concluida, usuarioID} = request.body
+    if(titulo === "" || titulo.trim() === ""){
+      return response.status(400).json({
+      mensagem: "Título vazio",
+    });
+    }
     const tarefas = await tarefaLogic.cadastrarTarefa(titulo, descricao, prioridade, concluida, usuarioID);
 
     return response.status(201).json(tarefas);
