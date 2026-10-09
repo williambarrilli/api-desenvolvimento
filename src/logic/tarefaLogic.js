@@ -19,4 +19,13 @@ export function cadastrarTarefa(requestBody){
     usuarioId: requestBody.usuarioId,
   };
   tarefaRepository.criar(novaTarefa);
+export function cadastrarTarefas(body) {
+  const novaTarefa={
+    titulo:body.titulo,
+    descricao:body.descricao,
+    prioridade:body.prioridade,
+    concluida:body.concluida,
+    usuarioId:body.usuarioId,
+  }
+  return tarefaRepository.criar(novaTarefa);
 }
