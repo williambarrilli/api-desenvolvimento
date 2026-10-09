@@ -22,6 +22,6 @@ export function criarTarefa(tarefa){
   if(tarefa.concluida)novaTarefa.concluida = tarefa.concluida
   if(tarefa.usuarioId)novaTarefa.usuarioId=tarefa.usuarioId
   
-  tarefaRepository.criar(novaTarefa)
-  return novaTarefa
+  return tarefaRepository.criar(novaTarefa)
+  
 }
