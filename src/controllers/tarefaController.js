@@ -39,9 +39,8 @@ export async function  cadastrarTarefa(request, response) {
     } 
     const tarefa = await tarefaLogic.cadastrarTarefa(request.body);
 
-    return response.status(201).json(tarefa.titulo)
+    return response.status(201).json({mensagem: titulo})
   }catch (error){
-    console.log(error)
       console.error(`erro ao criar tarefas: ${error.message}`);
     
     return response.status(500).json({mensagem: 'Erro interno do servidor',});
