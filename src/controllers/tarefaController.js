@@ -42,7 +42,7 @@ export async function cadastrarTarefa(request, response) {
   } catch (error) {
     console.error(`Erro ao listar tarefas: ${error.message}`);
 
-    return response.status(500).json({
+    return response.status(400).json({
       mensagem: "Erro interno do servidor",
     });
   }
