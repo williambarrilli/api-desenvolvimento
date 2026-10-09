@@ -1,51 +1,52 @@
 # API de desenvolvimento
 
-API mínima em Express para os alunos praticarem desenvolvimento por issues.
-O projeto começa retornando uma tarefa e separa o código em três camadas:
+API em Express para os alunos praticarem desenvolvimento por User Stories.
+O projeto usa SQLite e mantém o fluxo em camadas:
 
 ```text
-controller -> logic -> repository -> data/tarefa.json
+server -> controller -> logic -> repository -> data/banco.db
 ```
 
 ## Fluxo visual
 
 ```mermaid
 flowchart LR
-    cliente["Aluno ou curl"] -->|"GET /"| servidor["src/server.js"]
-    servidor --> controller["Controller: tarefaController"]
-    controller --> logic["Logic: tarefaLogic"]
-    logic --> repository["Repository: tarefaRepository"]
-    repository <-->|"Lê e salva"| arquivo[("data/tarefa.json")]
-    repository --> resultado["Tarefa encontrada"]
-    resultado --> resposta["Resposta JSON 200"]
+    cliente["Aluno ou curl"] -->|"HTTP"| servidor["src/server.js"]
+    servidor --> controller["Controller"]
+    controller --> logic["Logic"]
+    logic --> repository["Repository"]
+    repository <-->|"SQL"| banco[("data/banco.db")]
 ```
 
-Em resumo: o aluno faz uma requisição, o `server.js` encaminha para o
-controller, a logic coordena o caso de uso e o repository acessa o arquivo.
+O controller traduz HTTP, a logic coordena o caso de uso e o repository
+executa os comandos SQL. Cada camada tem uma responsabilidade clara.
 
-## Como executar
+## Pré-requisito
 
-Pré-requisito: Node.js instalado.
-
-Na pasta do projeto, instale as dependências:
+O projeto usa o módulo `node:sqlite`, disponível no Node.js **22.13 ou
+superior**.
 
 ```bash
+node --version
 npm install
 ```
 
-Inicie a API:
+Ao iniciar, o Node pode mostrar um aviso `ExperimentalWarning` sobre SQLite.
+Esse aviso é esperado e não impede a execução.
+
+## Como executar
 
 ```bash
 npm start
 ```
 
-Durante o desenvolvimento, use o Nodemon:
+Durante o desenvolvimento:
 
 ```bash
 npm run dev
 ```
 
-Para verificar a qualidade do código sem executar testes unitários:
+Verifique o lint com:
 
 ```bash
 npm run lint
@@ -53,46 +54,62 @@ npm run lint
 
 A API ficará disponível em `http://localhost:3000`.
 
-## Endpoint inicial
+## Banco de dados
+
+O arquivo `data/banco.sql` cria as tabelas e os dados iniciais. A conexão
+(`src/database/conexao.js`) executa esse script sempre que a API inicia.
+
+- `CREATE TABLE IF NOT EXISTS` não recria tabelas existentes.
+- `INSERT OR IGNORE` não duplica os dados iniciais.
+- `data/banco.db` é criado automaticamente e não deve ser versionado.
+
+Para voltar aos dados iniciais, pare a API, remova `data/banco.db` e inicie
+novamente.
+
+## Endpoints de exemplo
 
 ### `GET /`
 
-Retorna a tarefa persistida no arquivo `data/tarefa.json`:
-
-```json
-{
-  "id": 1,
-  "titulo": "Aprender Express",
-  "descricao": "Implementar a primeira tarefa da API",
-  "prioridade": "media",
-  "concluida": false
-}
-```
-
-Teste com:
+Retorna a primeira tarefa do banco:
 
 ```bash
 curl http://localhost:3000/
 ```
 
+### `GET /tarefas`
+
+Lista as tarefas:
+
+```bash
+curl http://localhost:3000/tarefas
+```
+
+## Exemplo direto do repository
+
+O comando abaixo mostra `listar`, `criar`, `buscarPorId`, `atualizar` e
+`remover` sem precisar iniciar o servidor:
+
+```bash
+npm run exemplo
+```
+
 ## Organização do código
 
-- `src/server.js`: configura o Express e registra a rota.
-- `src/controllers/tarefaController.js`: recebe a requisição e monta a resposta HTTP.
-- `src/logic/tarefaLogic.js`: representa a regra de negócio do caso de uso.
-- `src/repositories/tarefaRepository.js`: lê e grava diretamente o arquivo JSON.
-- `data/tarefa.json`: armazenamento inicial da tarefa.
+- `src/server.js`: configura o Express e registra as rotas.
+- `src/controllers/tarefaController.js`: traduz requisições e respostas HTTP.
+- `src/logic/tarefaLogic.js`: coordena o caso de uso.
+- `src/models/tarefa.js`: modelo disponível para as próximas atividades.
+- `src/database/conexao.js`: abre o banco e executa `data/banco.sql`.
+- `src/repositories/tarefaRepository.js`: executa o SQL do CRUD de tarefas.
+- `src/exemplo-repository.js`: demonstra o repository no terminal.
+- `data/banco.sql`: define tabelas e dados iniciais.
 
-O repository recria o arquivo com a tarefa padrão se ele ainda não existir.
+## Sugestões de atividades
 
-## Sugestões de issues para os alunos
-
-- Criar uma rota `GET /tarefas` para listar tarefas.
-- Permitir cadastrar uma tarefa usando `POST`.
-- Permitir alterar uma tarefa usando `PUT` ou `PATCH`.
-- Permitir remover uma tarefa usando `DELETE`.
-- Validar o formato do corpo das requisições.
-- Criar tratamento centralizado de erros. 
+- Criar `GET /tarefas/:id` para buscar uma tarefa.
+- Criar `POST /tarefas` para cadastrar uma tarefa.
+- Criar `PATCH /tarefas/:id` para atualizar uma tarefa.
+- Criar `DELETE /tarefas/:id` para remover uma tarefa.
+- Criar um `usuarioRepository` para a tabela `usuarios`.
 - Adicionar testes automatizados para controller, logic e repository.
-- Substituir o arquivo JSON por outro mecanismo de persistência.
-- Documentar a API com exemplos de requisições e respostas. 
+- Criar filtros por conclusão, prioridade ou usuário.
