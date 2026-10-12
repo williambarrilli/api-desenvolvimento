@@ -5,9 +5,6 @@ export function obterTarefa() {
   return tarefaRepository.buscarPorId(1);
 }
 
-export function listarTarefas() {
-  return tarefaRepository.listar();
-}
 
 export function cadastrarTarefa(requestBody){
   const novaTarefa = {
