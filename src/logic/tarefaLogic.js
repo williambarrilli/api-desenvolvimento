@@ -9,29 +9,30 @@ export function obterTarefa() {
 export function listarTarefas() {
     return tarefaRepository.listar();
 }
+
+export function buscarTarefaPorId(id) {
+    return tarefaRepository.buscarPorId(id);
+}
+
+
 export function cadastrarTarefa(body) {
-
-    if(body.titulo === undefined || body.titulo === null || body.titulo.trim() === ""){
-        throw new Error("O campo 'titulo' é obrigatório.");
-    }
-
     const novaTarefa = {
-        titulo: body.titulo
-    }
+        titulo: body.titulo.trim(),
+    };
 
-    if(body.descricao !== undefined && body.descricao !== null && body.descricao.trim() !== ""){
+    if (body.descricao) {
         novaTarefa.descricao = body.descricao;
     }
 
-    if(body.prioridade !== undefined && body.prioridade !== null && body.prioridade.trim() !== ""){
+    if (body.prioridade) {
         novaTarefa.prioridade = body.prioridade;
     }
 
-    if(body.concluida !== undefined && body.concluida !== null){
+    if (body.concluida !== undefined && body.concluida !== null) {
         novaTarefa.concluida = body.concluida;
     }
 
-    if(body.usuarioId !== undefined && body.usuarioId !== null){
+    if (body.usuarioId !== undefined && body.usuarioId !== null) {
         novaTarefa.usuarioId = body.usuarioId;
     }
 
