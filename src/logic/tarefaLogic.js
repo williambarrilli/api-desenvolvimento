@@ -86,6 +86,18 @@ export function concluirTarefa(id) {
 
   return tarefaRepository.atualizar(idNumerico, { concluida: true });
 }
+export function listarTarefas(concluida) {
+  if (concluida === undefined) {
+    return tarefaRepository.listar();
+  }
+
+  if (concluida !== "true" && concluida !== "false") {
+    throw new ErroDeValidacao("O parâmetro concluida deve ser true ou false");
+  }
+
+  return tarefaRepository.listarPorConclusao(concluida === "true");
+}
+
 
 
 
