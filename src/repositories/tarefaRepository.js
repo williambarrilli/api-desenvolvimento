@@ -83,3 +83,20 @@ export function remover(id) {
 
   return resultado.changes > 0;
 }
+
+// 2766
+export function listarPorConclusao(concluida) {
+  const tarefas = db
+    .prepare("SELECT * FROM tarefas WHERE concluida = ? ORDER BY id")
+    .all(concluida ? 1 : 0);
+
+  return tarefas.map(mapearTarefa);
+}
+// 2767
+export function listarPorPrioridade(prioridade) {
+  const tarefas = db
+    .prepare("SELECT * FROM tarefas WHERE prioridade = ? ORDER BY id")
+    .all(prioridade);
+
+  return tarefas.map(mapearTarefa);
+}

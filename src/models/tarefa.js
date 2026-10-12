@@ -12,7 +12,7 @@ export class Tarefa {
   constructor({
     id,
     titulo,
-    descricao = "",
+    descricao= '',
     prioridade = "media",
     concluida = false,
     usuarioId = null,
