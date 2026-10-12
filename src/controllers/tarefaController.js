@@ -21,6 +21,7 @@ export async function listarTarefas(request, response) {
     const tarefas = await tarefaLogic.listarTarefas(
       request.query.concluida,
       request.query.prioridade,
+      request.query.busca,
     );
 
     return response.status(200).json(tarefas);

@@ -7,7 +7,7 @@ export function obterTarefa() {
 }
 
 // A logic coordena a consulta; somente o repository conhece o SQL.
-export function listarTarefas(concluida, prioridade) {
+export function listarTarefas(concluida, prioridade, busca) {
     if (concluida !== undefined && concluida !== "true" && concluida !== "false") {
         throw new ErroDeValidacao("O parâmetro 'concluida' deve ser true ou false");
     }
@@ -16,26 +16,35 @@ export function listarTarefas(concluida, prioridade) {
         throw new ErroDeValidacao("O parâmetro 'prioridade' deve ser: baixa, media ou alta");
     }
 
+    if (busca !== undefined && typeof busca !== "string") {
+        throw new ErroDeValidacao("O parâmetro 'busca' deve ser um texto");
+    }
+
+    let tarefas;
+
+    if (busca !== undefined) {
+        tarefas = tarefaRepository.listarPorBusca(busca);
+    } else if (prioridade !== undefined) {
+        tarefas = tarefaRepository.listarPorPrioridade(prioridade);
+    } else if (concluida === "true") {
+        tarefas = tarefaRepository.listarPorConclusao(1);
+    } else if (concluida === "false") {
+        tarefas = tarefaRepository.listarPorConclusao(0);
+    } else {
+        tarefas = tarefaRepository.listar();
+    }
+
     if (prioridade !== undefined) {
-        const tarefas = tarefaRepository.listarPorPrioridade(prioridade);
-
-        if (concluida === undefined) {
-            return tarefas;
-        }
-
-        return tarefas.filter((tarefa) => tarefa.concluida === (concluida === "true"));
+        tarefas = tarefas.filter((tarefa) => tarefa.prioridade === prioridade);
     }
 
-    if (concluida === "true") {
-        return tarefaRepository.listarPorConclusao(1);
+    if (concluida !== undefined) {
+        tarefas = tarefas.filter((tarefa) => tarefa.concluida === (concluida === "true"));
     }
 
-    if (concluida === "false") {
-        return tarefaRepository.listarPorConclusao(0);
-    }
-
-    return tarefaRepository.listar();
+    return tarefas;
 }
+
 export function cadastrarTarefa(body) {
     const novaTarefa = {
         titulo: body.titulo.trim(),
