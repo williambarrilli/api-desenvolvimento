@@ -10,7 +10,7 @@ app.use((request, response, next) => {
   response.setHeader("Access-Control-Allow-Origin", "*");
   response.setHeader(
     "Access-Control-Allow-Methods",
-    "GET,OPTIONS",
+    "GET,PATCH,DELETE,OPTIONS",
   );
   response.setHeader(
     "Access-Control-Allow-Headers",
@@ -28,6 +28,11 @@ app.use(express.json());
 
 app.get("/", tarefaController.obterTarefa);
 app.get("/tarefas", tarefaController.listarTarefas);
+app.get("/tarefas/:id", tarefaController.buscarTarefaPorId);
+app.post("/tarefas", tarefaController.cadastrarTarefa);
+app.patch("/tarefas/:id", tarefaController.atualizarTarefa);
+app.patch("/tarefas/:id/concluir", tarefaController.concluirTarefa);
+app.delete("/tarefas/:id", tarefaController.removerTarefa);
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   app.listen(PORTA, () => {
