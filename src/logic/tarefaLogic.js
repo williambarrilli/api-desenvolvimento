@@ -1,11 +1,10 @@
 import * as tarefaRepository from "../repositories/tarefaRepository.js";
+import { ErroDeValidacao } from "../models/tarefa.js";
 
-// Mantém a rota inicial GET / retornando a primeira tarefa do banco.
 export function obterTarefa() {
   return tarefaRepository.buscarPorId(1);
 }
 
-// A logic coordena a consulta; somente o repository conhece o SQL.
 export function listarTarefas() {
   return tarefaRepository.listar();
 }
@@ -17,12 +16,60 @@ export function cadastrarTarefa(requestBody){
     prioridade: requestBody.prioridade,
     concluida: requestBody.concluida,
     usuarioId: requestBody.usuarioId,
-
-    
   };
   return tarefaRepository.criar(novaTarefa);
 }
 
-export function listarTarefaPorId(id) {
-  return tarefaRepository.buscarPorId(id);
+
+function validarId(id) {
+  const idNumerico = Number(id);
+
+  if (!Number.isInteger(idNumerico) || idNumerico <= 0) {
+    throw new ErroDeValidacao("O id deve ser um número inteiro positivo");
+  }
+
+  return idNumerico;
 }
+
+export function listarTarefaPorId(id) {
+  return tarefaRepository.buscarPorId(validarId(id));
+}
+
+export function atualizarTarefa(id, requestBody) {
+  const idNumerico = validarId(id);
+  const { titulo, descricao, prioridade, concluida } = requestBody;
+  const campos = {};
+
+  if (titulo !== undefined) {
+    if (typeof titulo !== "string" || titulo.trim() === "") {
+      throw new ErroDeValidacao("O campo titulo deve ser um texto não vazio");
+    }
+    campos.titulo = titulo.trim();
+  }
+
+  if (descricao !== undefined) {
+    if (typeof descricao !== "string") {
+      throw new ErroDeValidacao("O campo descricao deve ser um texto");
+    }
+    campos.descricao = descricao;
+  }
+
+  if (prioridade !== undefined) {
+    if (!["baixa", "media", "alta"].includes(prioridade)) {
+      throw new ErroDeValidacao("O campo prioridade deve ser: baixa, media, alta");
+    }
+    campos.prioridade = prioridade;
+  }
+
+  if (concluida !== undefined) {
+    if (typeof concluida !== "boolean") {
+      throw new ErroDeValidacao("O campo concluida deve ser true ou false");
+    }
+    campos.concluida = concluida;
+  }
+
+  return tarefaRepository.atualizar(idNumerico, campos);
+}
+
+
+

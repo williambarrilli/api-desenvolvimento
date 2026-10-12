@@ -1,4 +1,5 @@
 import * as tarefaLogic from "../logic/tarefaLogic.js";
+import { ErroDeValidacao } from "../models/tarefa.js";
 
 
 export async function obterTarefa(request, response) {
@@ -28,32 +29,6 @@ export async function listarTarefas(request, response) {
   }
 }
 
-export async function listarTarefaPorId(request, response) {
-  try {
-    const { id } = request.params;
-    const idNumerico = Number(id);
-
-    if (!Number.isInteger(idNumerico) || idNumerico <= 0) {
-      return response.status(400).json({
-        mensagem: "O id deve ser um número inteiro positivo",
-      });
-    }
-    const tarefa = await tarefaLogic.listarTarefaPorId(idNumerico);
-
-    if (!tarefa) {
-      return response.status(404).json({ mensagem: "Tarefa não encontrada" });
-    }
-
-    return response.status(200).json(tarefa);
-  } catch (error) {
-    console.error(`Erro ao listar tarefa por ID: ${error.message}`);
-
-    return response.status(500).json({
-      mensagem: "Erro interno do servidor",
-    });
-  }
-}
-
 export async function  cadastrarTarefa(request, response) {
   try{
     const { titulo } = request.body;
@@ -71,4 +46,48 @@ export async function  cadastrarTarefa(request, response) {
     
     return response.status(500).json({mensagem: 'Erro interno do servidor',});
 }
+}
+
+
+export async function listarTarefaPorId(request, response) {
+  try {
+    const tarefa = await tarefaLogic.listarTarefaPorId(request.params.id);
+
+    if (!tarefa) {
+      return response.status(404).json({ mensagem: "Tarefa não encontrada" });
+    }
+
+    return response.status(200).json(tarefa);
+  } catch (error) {
+    if (error instanceof ErroDeValidacao) {
+      return response.status(400).json({ mensagem: error.message });
+    }
+
+    console.error(`Erro ao listar tarefa por ID: ${error.message}`);
+
+    return response.status(500).json({ mensagem: "Erro interno do servidor" });
+  }
+}
+
+export async function atualizarTarefa(request, response) {
+  try {
+    const tarefa = await tarefaLogic.atualizarTarefa(
+      request.params.id,
+      request.body,
+);
+
+    if (!tarefa) {
+      return response.status(404).json({ mensagem: "Tarefa não encontrada" });
+    }
+
+    return response.status(200).json(tarefa);
+  } catch (error) {
+    if (error instanceof ErroDeValidacao) {
+      return response.status(400).json({ mensagem: error.message });
+    }
+
+    console.error(`Erro ao atualizar tarefa: ${error.message}`);
+
+    return response.status(500).json({ mensagem: "Erro interno do servidor" });
+  }
 }
