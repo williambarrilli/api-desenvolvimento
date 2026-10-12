@@ -7,8 +7,20 @@ export function obterTarefa() {
 }
 
 // A logic coordena a consulta; somente o repository conhece o SQL.
-export function listarTarefas() {
-    return tarefaRepository.listar();
+export function listarTarefas(concluida) {
+    if (concluida === undefined) {
+        return tarefaRepository.listar();
+    }
+
+    if (concluida === "true") {
+        return tarefaRepository.listarPorConclusao(1);
+    }
+
+    if (concluida === "false") {
+        return tarefaRepository.listarPorConclusao(0);
+    }
+
+    throw new ErroDeValidacao("O parâmetro 'concluida' deve ser true ou false");
 }
 
 export function buscarTarefaPorId(id) {
