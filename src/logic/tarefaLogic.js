@@ -22,3 +22,7 @@ export function cadastrarTarefa(requestBody){
   };
   return tarefaRepository.criar(novaTarefa);
 }
+
+export function listarTarefaPorId(id) {
+  return tarefaRepository.buscarPorId(id);
+}

@@ -14,7 +14,6 @@ export async function obterTarefa(request, response) {
     });
   }
 }
-
 export async function listarTarefas(request, response) {
   try {
     const tarefas = await tarefaLogic.listarTarefas();
@@ -22,6 +21,32 @@ export async function listarTarefas(request, response) {
     return response.status(200).json(tarefas);
   } catch (error) {
     console.error(`Erro ao listar tarefas: ${error.message}`);
+
+    return response.status(500).json({
+      mensagem: "Erro interno do servidor",
+    });
+  }
+}
+
+export async function listarTarefaPorId(request, response) {
+  try {
+    const { id } = request.params;
+    const idNumerico = Number(id);
+
+    if (!Number.isInteger(idNumerico) || idNumerico <= 0) {
+      return response.status(400).json({
+        mensagem: "O id deve ser um número inteiro positivo",
+      });
+    }
+    const tarefa = await tarefaLogic.listarTarefaPorId(idNumerico);
+
+    if (!tarefa) {
+      return response.status(404).json({ mensagem: "Tarefa não encontrada" });
+    }
+
+    return response.status(200).json(tarefa);
+  } catch (error) {
+    console.error(`Erro ao listar tarefa por ID: ${error.message}`);
 
     return response.status(500).json({
       mensagem: "Erro interno do servidor",
