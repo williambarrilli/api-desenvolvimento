@@ -59,6 +59,7 @@ export function atualizar(id, tarefa) {
   // A leitura anterior mantém compatibilidade com atualizações parciais.
   const dados = { ...tarefaAtual, ...tarefa };
 
+
   db.prepare(
     `
     UPDATE tarefas
