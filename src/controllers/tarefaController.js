@@ -14,7 +14,6 @@ export async function obterTarefa(request, response) {
     });
   }
 }
-
 export async function listarTarefas(request, response) {
   try {
     const tarefas = await tarefaLogic.listarTarefas();
@@ -29,20 +28,47 @@ export async function listarTarefas(request, response) {
   }
 }
 
-export async function cadastrarTarefa(request, response) {
+export async function listarTarefaPorId(request, response) {
   try {
-    const novaTarefa = await tarefaLogic.cadastrarTarefa(request.body ?? {});
+    const { id } = request.params;
+    const idNumerico = Number(id);
 
-    return response.status(201).json(novaTarefa);
-  } catch (error) {
-    if (error) {
-      return response.status(400).json({ mensagem: error.message });
+    if (!Number.isInteger(idNumerico) || idNumerico <= 0) {
+      return response.status(400).json({
+        mensagem: "O id deve ser um número inteiro positivo",
+      });
+    }
+    const tarefa = await tarefaLogic.listarTarefaPorId(idNumerico);
+
+    if (!tarefa) {
+      return response.status(404).json({ mensagem: "Tarefa não encontrada" });
     }
 
-    console.error(`Erro ao cadastrar tarefa: ${error.message}`);
+    return response.status(200).json(tarefa);
+  } catch (error) {
+    console.error(`Erro ao listar tarefa por ID: ${error.message}`);
 
     return response.status(500).json({
       mensagem: "Erro interno do servidor",
     });
   }
+}
+
+export async function  cadastrarTarefa(request, response) {
+  try{
+    const { titulo } = request.body;
+    
+    if(titulo === undefined || titulo.trim() === ""){
+      return response.status(400).json({
+        mensagem: "O campo titulo é obrigatorio",
+      });
+    } 
+    const tarefa = await tarefaLogic.cadastrarTarefa(request.body);
+
+    return response.status(201).json(tarefa)
+  }catch (error){
+      console.error(`erro ao criar tarefas: ${error.message}`);
+    
+    return response.status(500).json({mensagem: 'Erro interno do servidor',});
+}
 }
