@@ -7,9 +7,23 @@ export function obterTarefa() {
 }
 
 // A logic coordena a consulta; somente o repository conhece o SQL.
-export function listarTarefas(concluida) {
-    if (concluida === undefined) {
-        return tarefaRepository.listar();
+export function listarTarefas(concluida, prioridade) {
+    if (concluida !== undefined && concluida !== "true" && concluida !== "false") {
+        throw new ErroDeValidacao("O parâmetro 'concluida' deve ser true ou false");
+    }
+
+    if (prioridade !== undefined && !["baixa", "media", "alta"].includes(prioridade)) {
+        throw new ErroDeValidacao("O parâmetro 'prioridade' deve ser: baixa, media ou alta");
+    }
+
+    if (prioridade !== undefined) {
+        const tarefas = tarefaRepository.listarPorPrioridade(prioridade);
+
+        if (concluida === undefined) {
+            return tarefas;
+        }
+
+        return tarefas.filter((tarefa) => tarefa.concluida === (concluida === "true"));
     }
 
     if (concluida === "true") {
@@ -20,14 +34,8 @@ export function listarTarefas(concluida) {
         return tarefaRepository.listarPorConclusao(0);
     }
 
-    throw new ErroDeValidacao("O parâmetro 'concluida' deve ser true ou false");
+    return tarefaRepository.listar();
 }
-
-export function buscarTarefaPorId(id) {
-    return tarefaRepository.buscarPorId(id);
-}
-
-
 export function cadastrarTarefa(body) {
     const novaTarefa = {
         titulo: body.titulo.trim(),

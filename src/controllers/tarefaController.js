@@ -18,7 +18,10 @@ export async function obterTarefa(request, response) {
 
 export async function listarTarefas(request, response) {
   try {
-    const tarefas = await tarefaLogic.listarTarefas(request.query.concluida);
+    const tarefas = await tarefaLogic.listarTarefas(
+      request.query.concluida,
+      request.query.prioridade,
+    );
 
     return response.status(200).json(tarefas);
   } catch (error) {
