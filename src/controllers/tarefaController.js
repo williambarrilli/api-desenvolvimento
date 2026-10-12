@@ -1,4 +1,5 @@
 import * as tarefaLogic from "../logic/tarefaLogic.js";
+import { ErroDeValidacao } from "../models/tarefa.js";
 
 
 export async function obterTarefa(request, response) {
@@ -17,10 +18,14 @@ export async function obterTarefa(request, response) {
 
 export async function listarTarefas(request, response) {
   try {
-    const tarefas = await tarefaLogic.listarTarefas();
+    const tarefas = await tarefaLogic.listarTarefas(request.query.concluida);
 
     return response.status(200).json(tarefas);
   } catch (error) {
+    if (error instanceof ErroDeValidacao) {
+      return response.status(400).json({ mensagem: error.message });
+    }
+
     console.error(`Erro ao listar tarefas: ${error.message}`);
 
     return response.status(500).json({
@@ -29,17 +34,117 @@ export async function listarTarefas(request, response) {
   }
 }
 
-export async function cadastrarTarefa(request, response) {
+export async function buscarTarefaPorId(request, response) {
+  const { id } = request.params;
+  const numero = Number(id);
+
+  if (!Number.isSafeInteger(numero) || numero <= 0 || String(numero) !== id) {
+    return response.status(400).json({
+      mensagem: "O id deve ser um número inteiro positivo",
+    });
+  }
+
   try {
-    const novaTarefa = await tarefaLogic.cadastrarTarefa(request.body ?? {});
+    const tarefa = await tarefaLogic.buscarTarefaPorId(numero);
+
+    if (!tarefa) {
+      return response.status(404).json({ mensagem: "Tarefa não encontrada" });
+    }
+
+    return response.status(200).json(tarefa);
+  } catch (error) {
+    console.error(`Erro ao buscar tarefa por id: ${error.message}`);
+
+    return response.status(500).json({
+      mensagem: "Erro interno do servidor",
+    });
+  }
+}
+
+export async function cadastrarTarefa(request, response) {
+  const body = request.body ?? {};
+
+  if (typeof body.titulo !== "string" || body.titulo.trim() === "") {
+    return response.status(400).json({
+      mensagem: "O campo 'titulo' é obrigatório.",
+    });
+  }
+
+  try {
+    const novaTarefa = await tarefaLogic.cadastrarTarefa(body);
 
     return response.status(201).json(novaTarefa);
   } catch (error) {
-    if (error) {
+    console.error(`Erro ao cadastrar tarefa: ${error.message}`);
+
+    return response.status(500).json({
+      mensagem: "Erro interno do servidor",
+    });
+  }
+}
+
+export async function atualizarTarefa(request, response) {
+  try {
+    const tarefa = await tarefaLogic.atualizarTarefa(
+      request.params.id,
+      request.body ?? {},
+    );
+
+    if (!tarefa) {
+      return response.status(404).json({ mensagem: "Tarefa não encontrada" });
+    }
+
+    return response.status(200).json(tarefa);
+  } catch (error) {
+    if (error instanceof ErroDeValidacao) {
       return response.status(400).json({ mensagem: error.message });
     }
 
-    console.error(`Erro ao cadastrar tarefa: ${error.message}`);
+    console.error(`Erro ao atualizar tarefa: ${error.message}`);
+
+    return response.status(500).json({
+      mensagem: "Erro interno do servidor",
+    });
+  }
+}
+
+export async function removerTarefa(request, response) {
+  try {
+    const tarefa = await tarefaLogic.removerTarefa(request.params.id);
+
+    if (!tarefa) {
+      return response.status(404).json({ mensagem: "Tarefa não encontrada" });
+    }
+
+    return response.status(200).json(tarefa);
+  } catch (error) {
+    if (error instanceof ErroDeValidacao) {
+      return response.status(400).json({ mensagem: error.message });
+    }
+
+    console.error(`Erro ao remover tarefa: ${error.message}`);
+
+    return response.status(500).json({
+      mensagem: "Erro interno do servidor",
+    });
+  }
+}
+
+export async function concluirTarefa(request, response) {
+  try {
+    const tarefa = await tarefaLogic.concluirTarefa(request.params.id);
+
+    if (!tarefa) {
+      return response.status(404).json({ mensagem: "Tarefa não encontrada" });
+    }
+
+    return response.status(200).json(tarefa);
+  } catch (error) {
+    if (error instanceof ErroDeValidacao) {
+      return response.status(400).json({ mensagem: error.message });
+    }
+
+    console.error(`Erro ao concluir tarefa: ${error.message}`);
 
     return response.status(500).json({
       mensagem: "Erro interno do servidor",

@@ -20,6 +20,14 @@ export function listar() {
   return tarefas.map(mapearTarefa);
 }
 
+export function listarPorConclusao(concluida) {
+  const tarefas = db
+    .prepare("SELECT * FROM tarefas WHERE concluida = ? ORDER BY id")
+    .all(concluida);
+
+  return tarefas.map(mapearTarefa);
+}
+
 // Retorna uma tarefa pelo id ou null quando ela não existe.
 export function buscarPorId(id) {
   // O ? mantém o valor separado do SQL e evita montar a consulta com strings.
