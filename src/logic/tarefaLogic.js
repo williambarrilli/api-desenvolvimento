@@ -101,3 +101,13 @@ export function removerTarefa(id) {
 
     return tarefa;
 }
+
+export function concluirTarefa(id) {
+    const numero = Number(id);
+
+    if (!Number.isSafeInteger(numero) || numero <= 0 || String(numero) !== id) {
+        throw new ErroDeValidacao("O id deve ser um número inteiro positivo");
+    }
+
+    return tarefaRepository.atualizar(numero, { concluida: true });
+}
