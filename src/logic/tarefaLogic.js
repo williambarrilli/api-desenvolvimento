@@ -71,5 +71,15 @@ export function atualizarTarefa(id, requestBody) {
   return tarefaRepository.atualizar(idNumerico, campos);
 }
 
+export function removerTarefa(id) {
+  const idNumerico = validarId(id);
+  const tarefa = tarefaRepository.buscarPorId(idNumerico);
+
+  if(!tarefa) return null;
+
+  tarefaRepository.remover(idNumerico);
+  return tarefa;
+}
+
 
 

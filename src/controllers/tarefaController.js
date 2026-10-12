@@ -91,3 +91,23 @@ export async function atualizarTarefa(request, response) {
     return response.status(500).json({ mensagem: "Erro interno do servidor" });
   }
 }
+
+export async function removerTarefa(request, response) {
+  try {
+    const tarefa = await tarefaLogic.removerTarefa(request.params.id);
+
+    if (!tarefa) {
+      return response.status(404).json({ mensagem: "Tarefa não encontrada" });
+    }
+
+    return response.status(200).json(tarefa);
+  } catch (error) {
+    if (error instanceof ErroDeValidacao) {
+      return response.status(400).json({ mensagem: error.message });
+    }
+
+    console.error(`Erro ao remover tarefa: ${error.message}`);
+
+    return response.status(500).json({ mensagem: "Erro interno do servidor" });
+  }
+}
