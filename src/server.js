@@ -28,6 +28,8 @@ app.use(express.json());
 
 app.get("/", tarefaController.obterTarefa);
 app.get("/tarefas", tarefaController.listarTarefas);
+app.get("/tarefas/:id", tarefaController.buscarTarefaPorId);
+app.post("/tarefas", tarefaController.cadastrarTarefa);
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   app.listen(PORTA, () => {
