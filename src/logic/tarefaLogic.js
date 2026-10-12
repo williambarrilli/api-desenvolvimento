@@ -83,19 +83,29 @@ export function concluirTarefa(id) {
 
   return tarefaRepository.atualizar(idNumerico, { concluida: true });
 }
-export function listarTarefas(concluida) {
-  if (concluida === undefined) {
-    return tarefaRepository.listar();
+
+
+export function listarTarefas(concluida, prioridade) {
+  if (concluida !== undefined) {
+    if (concluida !== "true" && concluida !== "false") {
+      throw new ErroDeValidacao("O parâmetro concluida deve ser true ou false");
+    }
+
+    return tarefaRepository.listarPorConclusao(concluida === "true");
   }
 
-  if (concluida !== "true" && concluida !== "false") {
-    throw new ErroDeValidacao("O parâmetro concluida deve ser true ou false");
+  if (prioridade !== undefined) {
+    if (!["baixa", "media", "alta"].includes(prioridade)) {
+      throw new ErroDeValidacao("O parâmetro prioridade deve ser: baixa, media, alta");
+    }
+
+    return tarefaRepository.listarPorPrioridade(prioridade);
   }
 
-  return tarefaRepository.listarPorConclusao(concluida === "true");
+  return tarefaRepository.listar();
 }
 
-
+ 
 
 
 

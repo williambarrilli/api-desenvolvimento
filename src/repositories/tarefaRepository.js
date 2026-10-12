@@ -92,4 +92,11 @@ export function listarPorConclusao(concluida) {
 
   return tarefas.map(mapearTarefa);
 }
+// 2767
+export function listarPorPrioridade(prioridade) {
+  const tarefas = db
+    .prepare("SELECT * FROM tarefas WHERE prioridade = ? ORDER BY id")
+    .all(prioridade);
 
+  return tarefas.map(mapearTarefa);
+}
