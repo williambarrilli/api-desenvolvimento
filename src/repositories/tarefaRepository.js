@@ -45,7 +45,6 @@ export function criar(tarefa) {
       tarefa.concluida ? 1 : 0,
       tarefa.usuarioId ?? null,
     );
-    console.log(resultado);
 
   return buscarPorId(Number(resultado.lastInsertRowid));
 }
