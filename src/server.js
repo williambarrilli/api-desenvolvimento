@@ -29,6 +29,7 @@ app.get("/tarefas/:id", tarefaController.listarTarefaPorId);
 app.patch("/tarefas/:id", tarefaController.atualizarTarefa);
 app.post("/tarefas", tarefaController.cadastrarTarefa);
 app.delete("/tarefas/:id", tarefaController.removerTarefa);
+app.patch("/tarefas/:id/concluir", tarefaController.concluirTarefa);
 
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {

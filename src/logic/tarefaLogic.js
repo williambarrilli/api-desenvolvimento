@@ -81,5 +81,12 @@ export function removerTarefa(id) {
   return tarefa;
 }
 
+export function concluirTarefa(id) {
+  const idNumerico = validarId(id);
+
+  return tarefaRepository.atualizar(idNumerico, { concluida: true });
+}
+
+
 
 
