@@ -9,7 +9,7 @@ export function obterTarefa() {
 export function listarTarefas() {
   return tarefaRepository.listar();
 }
-export function cadastrarTarefas(body) {
+export function cadastrarTarefa(body) {
   const novaTarefa={
     titulo:body.titulo,
     descricao:body.descricao,
