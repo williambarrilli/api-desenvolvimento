@@ -1,13 +1,6 @@
 // Representa a entidade do domínio: o que é uma tarefa e quais regras
 // ela precisa cumprir para existir. A validação fica no construtor, então
 // um objeto Tarefa inválido nunca chega a ser criado.
-export class ErroDeValidacao extends Error {
-  constructor(mensagem) {
-    super(mensagem);
-    this.name = "ErroDeValidacao";
-  }
-}
-
 export class Tarefa {
   constructor({
     id,
@@ -18,12 +11,12 @@ export class Tarefa {
     usuarioId = null,
   }) {
     if (typeof titulo !== "string" || titulo.trim() === "") {
-      throw new ErroDeValidacao("O campo titulo é obrigatório");
+      throw new Error("O campo titulo é obrigatório");
     }
 
     const prioridades = ["baixa", "media", "alta"];
     if (!prioridades.includes(prioridade)) {
-      throw new ErroDeValidacao(
+      throw new Error(
         `O campo prioridade deve ser: ${prioridades.join(", ")}`,
       );
     }
