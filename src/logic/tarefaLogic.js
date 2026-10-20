@@ -1,8 +1,14 @@
 import * as tarefaRepository from "../repositories/tarefaRepository.js";
+import { Tarefa } from "../models/tarefa.js";
 
 // Mantém a rota inicial GET / retornando a primeira tarefa do banco.
 export function obterTarefa() {
   return tarefaRepository.buscarPorId(1);
+}
+
+export function cadastrarTarefas(body) {
+  const tarefa = new Tarefa(body);
+  return tarefaRepository.criar(tarefa);
 }
 
 // A logic coordena a consulta; somente o repository conhece o SQL.
