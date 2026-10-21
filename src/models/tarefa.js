@@ -3,7 +3,7 @@
 // um objeto Tarefa inválido nunca chega a ser criado.
 export class Tarefa {
     static PRIORIDADES =["alta", "media","baixa"]
-    constructor({titulo, descricao = null, prioridade = "media", concluida}){
+    constructor({titulo, descricao = null, prioridade = "media", concluida = false}){
 
         if(typeof titulo != 'string'|| titulo.trim() === ''){
             throw new Error ("O Campo de titulo é obrigatorio")
