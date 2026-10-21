@@ -18,3 +18,13 @@ export function cadastrarTarefa(body) {
   })
   return tarefaRepository.criar(novaTarefa);
 }
+export function atualizarTarefa(id, body) {
+  const tarefaAtualizada = new Tarefa({
+    id: Number(id),
+    titulo: body.titulo,
+    descricao: body.descricao,
+    prioridade: body.prioridade,
+    concluida: body.concluida,
+  });
+  return tarefaRepository.atualizar(tarefaAtualizada);
+}

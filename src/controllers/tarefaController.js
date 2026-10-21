@@ -46,3 +46,14 @@ export async function cadastrarTarefa(request, response) {
     });
   }
 }
+  export async function atualizarTarefa(request, response) {
+    try {
+      const tarefaAtualizada = await tarefaLogic.atualizarTarefa(request.params.id, request.body ?? {});
+  
+      return response.status(200).json(tarefaAtualizada);
+    } catch (error) {
+        console.error(`Erro ao atualizar tarefa: ${error.message}`);
+        return response.status(400).json({ mensagem: error.message });
+
+    }
+  }
