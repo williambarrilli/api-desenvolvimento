@@ -21,18 +21,21 @@ export class Tarefa {
             throw new Error ('Concluída não está como boolean')
         }
 
-        if (descricao.trim() === ""){
-            descricao = null
-        }
 
-        if (descricao.trim().length > 200){
-          throw new Error('A descrição deve ter no máximo 200 caracteres'); 
-        }
 
         if (typeof descricao != 'string' || descricao.trim() === ""){
           throw new Error ('A descrição deve ser texto')
         }
 
+        if (descricao.trim() === ""){
+            descricao = null
+        }else{
+          descricao.trim()
+        }
+
+        if (descricao.trim().length > 200){
+          throw new Error('A descrição deve ter no máximo 200 caracteres'); 
+        }
         
         this.titulo = titulo.trim()
         this.descricao = descricao
