@@ -23,8 +23,8 @@ INSERT OR IGNORE INTO usuarios (id, nome, email) VALUES
   (2, 'Bruno', 'bruno@email.com');
 
 INSERT OR IGNORE INTO tarefas
-  (id, titulo, descricao, prioridade, concluida, usuarioId)
+  (id, titulo, descricao, prioridade, concluida)
 VALUES
-  (1, 'Aprender Express', 'Implementar a primeira tarefa da API', 'media', 0, 1),
-  (2, 'Estudar SQL', 'Revisar SELECT, INSERT e UPDATE', 'alta', 1, 1),
-  (3, 'Migrar o repository', 'Trocar o arquivo JSON pelo SQLite', 'baixa', 0, 2);
+  (1, 'Aprender Express', 'Implementar a primeira tarefa da API', 'media', 0),
+  (2, 'Estudar SQL', 'Revisar SELECT, INSERT e UPDATE', 'alta', 1),
+  (3, 'Migrar o repository', 'Trocar o arquivo JSON pelo SQLite', 'baixa', 0);
