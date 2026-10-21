@@ -12,14 +12,6 @@ export class Tarefa {
       throw new Error('O título deve ter entre 3 e 100 caracteres')
     }
 
-    if(typeof descricao !== 'string' || descricao.trim() === ''){
-      descricao = null
-    }
-
-    if(typeof descricao !== 'string'){
-      throw new Error('A descrição deve ser um texto')
-    }
-
     if(!Tarefa.PRIORIDADES.includes(prioridade)){
       throw new Error('Prioridade inválida')
     }
@@ -28,11 +20,17 @@ export class Tarefa {
       throw new Error('Concluída deve ser boolean')
     }
 
-    const descricaoTarefa = descricao.trim()
+    if(typeof descricao !== 'string'){
+      descricao = null
+    }
 
-    if(descricaoTarefa.length > 200){
+    let descricaoTarefa = descricao
+
+    if(descricaoTarefa && descricaoTarefa.length > 200){
       throw new Error('A descrição não pode ter mais que 200 caracteres')
     }
+
+    descricaoTarefa = descricaoTarefa.trim()
 
     this.titulo = titulo
     this.descricao = descricaoTarefa
