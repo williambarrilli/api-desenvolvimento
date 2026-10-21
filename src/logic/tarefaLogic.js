@@ -1,5 +1,5 @@
 import * as tarefaRepository from "../repositories/tarefaRepository.js";
-
+import {Tarefa} from "../models/tarefa.js";
 // Mantém a rota inicial GET / retornando a primeira tarefa do banco.
 export function obterTarefa() {
   return tarefaRepository.buscarPorId(1);
@@ -10,11 +10,11 @@ export function listarTarefas() {
   return tarefaRepository.listar();
 }
 export function cadastrarTarefa(body) {
-  const novaTarefa={
+  const novaTarefa= new Tarefa({
     titulo:body.titulo,
     descricao:body.descricao,
     prioridade:body.prioridade,
     concluida:body.concluida,
-  }
+  })
   return tarefaRepository.criar(novaTarefa);
 }
