@@ -12,6 +12,9 @@ export class Tarefa {
     if (typeof titulo !== "string" || titulo.trim() === "") {
       throw new Error("O campo titulo é obrigatório");
     }
+    if(typeof titulo.trim() !== "string" || !isNaN(titulo.trim())) {
+      throw new Error("O campo titulo deve ser uma string");
+    }
 
     const prioridades = ["baixa", "media", "alta"];
     if (!prioridades.includes(prioridade)) {
