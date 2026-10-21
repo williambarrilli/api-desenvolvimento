@@ -26,12 +26,16 @@ export class Tarefa {
 
     let descricaoTarefa = descricao
 
-    if(descricaoTarefa && descricaoTarefa.length >= 200){
+    if(descricaoTarefa && descricaoTarefa.length > 200){
       throw new Error('A descrição não pode ter mais que 200 caracteres')
     }
 
     if(descricaoTarefa){
       descricaoTarefa = descricaoTarefa.trim()
+    }
+
+    if(typeof descricaoTarefa !== 'string'){
+      throw new Error('A descrição deve ser do tipo texto')
     }
 
     this.titulo = titulo
