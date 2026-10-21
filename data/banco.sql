@@ -16,7 +16,6 @@ CREATE TABLE IF NOT EXISTS tarefas (
   descricao TEXT,
   prioridade TEXT CHECK (prioridade IN ('baixa', 'media', 'alta')),
   concluida INTEGER NOT NULL DEFAULT 0 CHECK (concluida IN (0, 1)),
-  usuarioId INTEGER REFERENCES usuarios (id)
 );
 
 INSERT OR IGNORE INTO usuarios (id, nome, email) VALUES
