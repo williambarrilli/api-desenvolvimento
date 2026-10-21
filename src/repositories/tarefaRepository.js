@@ -34,8 +34,8 @@ export function criar(tarefa) {
     .prepare(
       `
       INSERT INTO tarefas
-        (titulo, descricao, prioridade, concluida, usuarioId)
-      VALUES (?, ?, ?, ?, ?)
+        (titulo, descricao, prioridade, concluida)
+      VALUES (?, ?, ?, ?)
     `,
     )
     .run(
@@ -43,7 +43,6 @@ export function criar(tarefa) {
       tarefa.descricao ?? null,
       tarefa.prioridade ?? null,
       tarefa.concluida ? 1 : 0,
-      tarefa.usuarioId ?? null,
     );
 
   return buscarPorId(Number(resultado.lastInsertRowid));
