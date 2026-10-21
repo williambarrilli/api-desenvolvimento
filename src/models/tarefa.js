@@ -19,16 +19,10 @@ export class Tarefa {
         `O campo prioridade deve ser: ${prioridades.join(", ")}`,
       );
     }
-    if(descricao.trim().length > 200) {
-      throw new Error("O campo descricao deve ter no máximo 200 caracteres");
-    }
-    if(typeof descricao !== "string") {
-      throw new Error("O campo descricao deve ser uma string");
-    }
 
     this.id = id;
     this.titulo = titulo.trim();
-    this.descricao = descricao.trim();
+    this.descricao = descricao;
     this.prioridade = prioridade;
     this.concluida = concluida;
   }
