@@ -29,7 +29,9 @@ export class Tarefa {
 
         if (descricao.trim() === ""){
             descricao = null
-        }else{
+        }
+
+        if( descricao != null){
           descricao.trim()
         }
 
