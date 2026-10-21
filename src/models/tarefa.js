@@ -3,7 +3,7 @@
 // um objeto Tarefa inválido nunca chega a ser criado.
 export class Tarefa {
   static PRIORIDADES = ['baixa', 'media', 'alta']
-  constructor({titulo, descricao = null, prioridade = "media", concluida}){
+  constructor({titulo, descricao = '', prioridade = "media", concluida = false}){
     if(typeof titulo !== 'string' || titulo.trim() === ''){
       throw new Error('O título é obrigatório')
     }
@@ -16,24 +16,26 @@ export class Tarefa {
       throw new Error('Prioridade inválida')
     }
 
-    if(typeof concluida != 'boolean'){
+    if(typeof concluida !== 'boolean'){
       throw new Error('Concluída deve ser boolean')
     }
 
-    if(typeof descricao !== 'string'){
+    if(typeof descricao !== 'string' || descricao.trim() === ''){
       descricao = null
     }
 
     let descricaoTarefa = descricao
 
-    if(descricaoTarefa && descricaoTarefa.length > 200){
+    if(descricaoTarefa && descricaoTarefa.length >= 200){
       throw new Error('A descrição não pode ter mais que 200 caracteres')
     }
 
-    descricaoTarefa = descricaoTarefa.trim()
+    if(descricaoTarefa){
+      descricaoTarefa = descricaoTarefa.trim()
+    }
 
     this.titulo = titulo
-    this.descricao = descricaoTarefa
+    this.descricao = descricaoTarefa ?? null
     this.prioridade = prioridade
     this.concluida = concluida
   }
@@ -43,7 +45,6 @@ export class Tarefa {
       throw new Error('A tarefa já está concluída!')
     }else{
       this.concluida = true
-      console.log('Tarefa concluída com sucesso!')
     }
   }
 
@@ -52,7 +53,6 @@ export class Tarefa {
       throw new Error('A tarefa já está em aberto!')
     }else{
       this.concluida = false
-      console.log('Tarefa reaberta com sucesso!')
     }
   }
 }
