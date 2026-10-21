@@ -25,10 +25,13 @@ export class Tarefa {
     if(typeof descricao !== "string") {
       throw new Error("O campo descricao deve ser uma string");
     }
+    if(descricao.trim() === "") {
+      descricao = null;
+    }
 
     this.id = id;
     this.titulo = titulo.trim();
-    this.descricao = descricao.trim();
+    this.descricao = descricao;
     this.prioridade = prioridade;
     this.concluida = concluida;
   }
