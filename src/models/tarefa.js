@@ -3,7 +3,7 @@
 // um objeto Tarefa inválido nunca chega a ser criado.
 export class Tarefa {
     static PRIORIDADES =["alta", "media","baixa"]
-    constructor({titulo, descricao = null, prioridade = "media", concluida = false}){
+    constructor({titulo, descricao = '', prioridade = "media", concluida = false}){
 
         if(typeof titulo != 'string'|| titulo.trim() === ''){
             throw new Error ("O Campo de titulo é obrigatorio")
@@ -29,7 +29,7 @@ export class Tarefa {
           throw new Error('A descrição deve ter no máximo 200 caracteres'); 
         }
 
-        if (typeof descricao != 'string'){
+        if (typeof descricao != 'string' || descricao.trim() === ""){
           throw new Error ('A descrição deve ser texto')
         }
 
