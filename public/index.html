@@ -14,21 +14,43 @@
       <p class="descricao">Esta página é um cliente da sua API: tudo o que aparece aqui vem de uma requisição para ela.</p>
     </header>
 
-    <form id="formulario">
-      <label for="titulo">Título</label>
-      <input id="titulo" name="titulo" type="text" placeholder="Ex.: Estudar fetch" autocomplete="off">
-
-      <label for="prioridade">Prioridade</label>
-      <select id="prioridade" name="prioridade">
-        <option value="baixa">baixa</option>
-        <option value="media" selected>media</option>
-        <option value="alta">alta</option>
-      </select>
-
-      <button type="submit">Criar tarefa</button>
-    </form>
-
     <p id="aviso" class="aviso" role="status" hidden></p>
+
+    <section>
+      <h2>Usuários</h2>
+      <form id="form-usuario" class="formulario">
+        <label for="nome">Nome</label>
+        <input id="nome" name="nome" type="text" placeholder="Ex.: Carla Souza" autocomplete="off">
+
+        <label for="email">E-mail</label>
+        <input id="email" name="email" type="text" placeholder="carla@email.com" autocomplete="off">
+
+        <button type="submit">Criar usuário</button>
+      </form>
+      <ul id="lista-usuarios" class="lista lista-usuarios"></ul>
+    </section>
+
+    <section>
+      <h2>Nova tarefa</h2>
+      <form id="form-tarefa" class="formulario">
+        <label for="titulo">Título</label>
+        <input id="titulo" name="titulo" type="text" placeholder="Ex.: Estudar fetch" autocomplete="off">
+
+        <label for="usuario">Usuário</label>
+        <select id="usuario" name="usuario">
+          <option value="">Selecione</option>
+        </select>
+
+        <label for="prioridade">Prioridade</label>
+        <select id="prioridade" name="prioridade">
+          <option value="baixa">baixa</option>
+          <option value="media" selected>media</option>
+          <option value="alta">alta</option>
+        </select>
+
+        <button type="submit">Criar tarefa</button>
+      </form>
+    </section>
 
     <section>
       <div class="cabecalho-lista">
