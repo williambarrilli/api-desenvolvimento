@@ -15,7 +15,8 @@ CREATE TABLE IF NOT EXISTS tarefas (
   titulo TEXT NOT NULL,
   descricao TEXT,
   prioridade TEXT CHECK (prioridade IN ('baixa', 'media', 'alta')),
-  concluida INTEGER NOT NULL DEFAULT 0 CHECK (concluida IN (0, 1))
+  concluida INTEGER NOT NULL DEFAULT 0 CHECK (concluida IN (0, 1)),
+  usuarioId INTEGER REFERENCES usuarios(id)
 );
 
 INSERT OR IGNORE INTO usuarios (id, nome, email) VALUES
@@ -23,8 +24,10 @@ INSERT OR IGNORE INTO usuarios (id, nome, email) VALUES
   (2, 'Bruno', 'bruno@email.com');
 
 INSERT OR IGNORE INTO tarefas
-  (id, titulo, descricao, prioridade, concluida)
+  (id, titulo, descricao, prioridade, concluida, usuarioId)
 VALUES
-  (1, 'Aprender Express', 'Implementar a primeira tarefa da API', 'media', 0),
-  (2, 'Estudar SQL', 'Revisar SELECT, INSERT e UPDATE', 'alta', 1),
-  (3, 'Migrar o repository', 'Trocar o arquivo JSON pelo SQLite', 'baixa', 0);
+  (1, 'Aprender Express', 'Implementar a primeira tarefa da API', 'media', 0, 2),
+  (2, 'Estudar SQL', 'Revisar SELECT, INSERT e UPDATE', 'alta', 1, 1),
+  (3, 'Migrar o repository', 'Trocar o arquivo JSON pelo SQLite', 'baixa', 0, 1);
+
+

@@ -34,8 +34,8 @@ export function criar(tarefa) {
     .prepare(
       `
       INSERT INTO tarefas
-        (titulo, descricao, prioridade, concluida)
-      VALUES (?, ?, ?, ?)
+        (titulo, descricao, prioridade, concluida, usuarioId)
+          VALUES (?, ?, ?, ?, ?)
     `,
     )
     .run(
@@ -43,6 +43,7 @@ export function criar(tarefa) {
       tarefa.descricao ?? null,
       tarefa.prioridade ?? null,
       tarefa.concluida ? 1 : 0,
+      tarefa.usuarioId ?? null,
     );
 
   return buscarPorId(Number(resultado.lastInsertRowid));
@@ -61,7 +62,7 @@ export function atualizar(id, tarefa) {
   db.prepare(
     `
     UPDATE tarefas
-    SET titulo = ?, descricao = ?, prioridade = ?, concluida = ?, usuarioId = ?
+    SET titulo = ?, descricao = ?, prioridade = ?, concluida = ?
     WHERE id = ?
   `,
   ).run(
@@ -69,7 +70,6 @@ export function atualizar(id, tarefa) {
     dados.descricao ?? null,
     dados.prioridade ?? null,
     dados.concluida ? 1 : 0,
-    dados.usuarioId ?? null,
     id,
   );
 

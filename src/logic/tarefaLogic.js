@@ -1,20 +1,72 @@
+import { Tarefa } from "../models/tarefa.js";
 import * as tarefaRepository from "../repositories/tarefaRepository.js";
 
-// Mantém a rota inicial GET / retornando a primeira tarefa do banco.
+
 export function obterTarefa() {
   return tarefaRepository.buscarPorId(1);
 }
 
-// A logic coordena a consulta; somente o repository conhece o SQL.
+
 export function listarTarefas() {
   return tarefaRepository.listar();
 }
+
 export function cadastrarTarefa(body) {
-  const novaTarefa={
-    titulo:body.titulo,
-    descricao:body.descricao,
-    prioridade:body.prioridade,
-    concluida:body.concluida,
+  const novaTarefa = new Tarefa(body);
+
+  if (novaTarefa.usuarioId !== null && !novaTarefa.concluida) {
+    const abertas = tarefaRepository
+      .listar()
+      .filter((t) => t.usuarioId === novaTarefa.usuarioId && !t.concluida).length;
+
+    if (abertas >= 3) {
+      const erro = new Error("O usuário já tem 3 tarefas abertas");
+      erro.status = 409;
+      throw erro;
+    }
   }
+
   return tarefaRepository.criar(novaTarefa);
+}
+
+
+export function atualizarTarefa(id, body) {
+  const tarefaAtual = tarefaRepository.buscarPorId(id);
+
+  if (!tarefaAtual) {
+    const erro = new Error("Tarefa não encontrada");
+    erro.status = 404;
+    throw erro;
+  }
+
+    const tarefaValidada = new Tarefa({ ...tarefaAtual, ...body });
+
+  if (tarefaAtual.concluida && tarefaValidada.prioridade !== tarefaAtual.prioridade) {
+    const erro = new Error("Não é possível mudar a prioridade de uma tarefa concluída");
+    erro.status = 409;
+    throw erro;
+  }
+  const tituloNovo = tarefaValidada.titulo.toLowerCase();
+
+  const repetido = tarefaRepository.listar().some((t) => t.id !== id && t.titulo.trim().toLowerCase() === tituloNovo);
+
+  if (repetido) {
+    const erro = new Error("Já existe uma tarefa com esse título");
+    erro.status = 409;
+    throw erro;
+  }
+
+  return tarefaRepository.atualizar(id, tarefaValidada);
+}
+
+export function buscarTarefa(id) {
+  const tarefa = tarefaRepository.buscarPorId(id);
+
+  if (!tarefa) {
+    const erro = new Error("Tarefa não encontrada");
+    erro.status = 404;
+    throw erro;
+  }
+
+  return tarefa;
 }
