@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Minhas tarefas</title>
+  <link rel="stylesheet" href="/app/estilo.css">
+</head>
+<body>
+  <main>
+    <header>
+      <p class="sobretitulo">api-desenvolvimento</p>
+      <h1>Minhas tarefas</h1>
+      <p class="descricao">Esta página é um cliente da sua API: tudo o que aparece aqui vem de uma requisição para ela.</p>
+    </header>
+
+    <form id="formulario">
+      <label for="titulo">Título</label>
+      <input id="titulo" name="titulo" type="text" placeholder="Ex.: Estudar fetch" autocomplete="off">
+
+      <label for="prioridade">Prioridade</label>
+      <select id="prioridade" name="prioridade">
+        <option value="baixa">baixa</option>
+        <option value="media" selected>media</option>
+        <option value="alta">alta</option>
+      </select>
+
+      <button type="submit">Criar tarefa</button>
+    </form>
+
+    <p id="aviso" class="aviso" role="status" hidden></p>
+
+    <section>
+      <div class="cabecalho-lista">
+        <h2>Tarefas</h2>
+        <button id="recarregar" type="button" class="secundario">Recarregar</button>
+      </div>
+      <ul id="lista" class="lista"></ul>
+    </section>
+  </main>
+
+  <script src="/app/app.js"></script>
+</body>
+</html>

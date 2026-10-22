@@ -26,6 +26,9 @@ app.use((request, response, next) => {
 
 app.use(express.json());
 
+// Página da turma (cliente da API): http://localhost:3000/app
+app.use("/app", express.static("public"));
+
 app.get("/", tarefaController.obterTarefa);
 app.get("/tarefas", tarefaController.listarTarefas);
 
