@@ -28,3 +28,4 @@ VALUES
   (1, 'Aprender Express', 'Implementar a primeira tarefa da API', 'media', 0),
   (2, 'Estudar SQL', 'Revisar SELECT, INSERT e UPDATE', 'alta', 1),
   (3, 'Migrar o repository', 'Trocar o arquivo JSON pelo SQLite', 'baixa', 0);
+
