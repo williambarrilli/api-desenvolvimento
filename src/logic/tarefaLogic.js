@@ -29,9 +29,7 @@ export function atualizarTarefa(id, body) {
   const tarefaValidada = new Tarefa({ ...tarefaAtual, ...body });
   const tituloNovo = tarefaValidada.titulo.toLowerCase();
 
-  const repetido = tarefaRepository
-    .listar()
-    .some((t) => t.id !== id && t.titulo.trim().toLowerCase() === tituloNovo);
+  const repetido = tarefaRepository.listar().some((t) => t.id !== id && t.titulo.trim().toLowerCase() === tituloNovo);
 
   if (repetido) {
     const erro = new Error("Já existe uma tarefa com esse título");
@@ -40,4 +38,16 @@ export function atualizarTarefa(id, body) {
   }
 
   return tarefaRepository.atualizar(id, tarefaValidada);
+}
+
+export function buscarTarefa(id) {
+  const tarefa = tarefaRepository.buscarPorId(id);
+
+  if (!tarefa) {
+    const erro = new Error("Tarefa não encontrada");
+    erro.status = 404;
+    throw erro;
+  }
+
+  return tarefa;
 }
