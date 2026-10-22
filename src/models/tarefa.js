@@ -6,8 +6,11 @@ export class Tarefa {
             throw new Error ("O Campo de titulo é obrigatorio")
         }
 
-        if(titulo.trim().length < 3 || titulo.trim().length > 100){
+         if(titulo.trim().length < 3 || titulo.trim().length > 100){
             throw new Error ("O titulo deve ter entre 3 a 100 caracteres ")
+        }
+        if(!isNaN(titulo.trim())){
+            throw new Error ("O titulo não pode conter apenas números")
         }
 
         if(!Tarefa.PRIORIDADES.includes(prioridade)){
