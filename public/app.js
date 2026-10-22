@@ -4,8 +4,6 @@
 
 const aviso = document.querySelector("#aviso");
 const listaTarefas = document.querySelector("#lista");
-const listaUsuarios = document.querySelector("#lista-usuarios");
-const formUsuario = document.querySelector("#form-usuario");
 const formTarefa = document.querySelector("#form-tarefa");
 const selectUsuario = document.querySelector("#usuario");
 const botaoRecarregar = document.querySelector("#recarregar");
@@ -27,23 +25,20 @@ function esconderAviso() {
 
 function nomeDoUsuario(usuarioId) {
   const dono = usuarios.find((usuario) => usuario.id === usuarioId);
-  return dono ? dono.nome : "sem usuário";
+  if (dono) return dono.nome;
+  return usuarioId ? `usuário ${usuarioId}` : "sem usuário";
 }
 
-function desenharUsuarios() {
-  listaUsuarios.innerHTML = "";
-  selectUsuario.innerHTML = '<option value="">Selecione</option>';
+// Preenche o select da nova tarefa com os usuários cadastrados.
+function desenharUsuarios(mensagemVazia = "") {
+  selectUsuario.innerHTML = "";
+
+  const primeira = document.createElement("option");
+  primeira.value = "";
+  primeira.textContent = usuarios.length > 0 ? "Selecione" : mensagemVazia || "Nenhum usuário cadastrado";
+  selectUsuario.append(primeira);
 
   for (const usuario of usuarios) {
-    const item = document.createElement("li");
-    const nome = document.createElement("strong");
-    nome.textContent = usuario.nome;
-    const email = document.createElement("span");
-    email.className = "email";
-    email.textContent = usuario.email;
-    item.append(nome, email);
-    listaUsuarios.append(item);
-
     const opcao = document.createElement("option");
     opcao.value = usuario.id;
     opcao.textContent = usuario.nome;
@@ -116,67 +111,45 @@ async function carregarTarefas() {
   }
 }
 
-// 2. LISTAR USUÁRIOS (pronto, igual ao das tarefas)
+// 2. LISTAR USUÁRIOS (pronto)
+// Enquanto a API não tiver a rota GET /usuarios, a página continua funcionando:
+// o select só avisa o que falta, e as tarefas aparecem "sem usuário".
 async function carregarUsuarios() {
   try {
     const resposta = await fetch("/usuarios");
     const dados = await lerResposta(resposta);
-    if (!resposta.ok) {
-      mostrarAviso(dados.mensagem);
-      return;
-    }
-    usuarios = dados;
-    desenharUsuarios();
+    usuarios = resposta.ok && Array.isArray(dados) ? dados : [];
+    desenharUsuarios(resposta.ok ? "" : "Sem rota GET /usuarios");
   } catch (error) {
     mostrarAviso("Não foi possível falar com a API. Ela está rodando?");
   }
 }
 
-// 3. CRIAR USUÁRIO
-async function criarUsuario(nome, email) {
-  // TODO 3: envie um POST /usuarios com { nome, email } no body.
-  //   - method: "POST"
-  //   - headers: { "Content-Type": "application/json" }
-  //   - body: JSON.stringify({ ... })
-  // Leia a resposta com await lerResposta(resposta):
-  //   - se resposta.ok for false, mostre dados.mensagem com mostrarAviso
-  //     (e-mail repetido deve chegar aqui como 409)
-  //   - se deu certo, mostre "Usuário criado" (tipo "sucesso"),
-  //     limpe o formulário (formUsuario.reset()) e chame carregarUsuarios()
-  mostrarAviso("TODO 3: criar usuário ainda não foi implementado.");
-}
-
-// 4. CRIAR TAREFA VINCULADA A UM USUÁRIO
+// 3. CRIAR TAREFA VINCULADA A UM USUÁRIO
 async function criarTarefa(titulo, usuarioId, prioridade) {
-  // TODO 4: envie um POST /tarefas com { titulo, prioridade, usuarioId } no body.
+  // TODO 3: envie um POST /tarefas com { titulo, prioridade, usuarioId } no body.
   //   - usuarioId chega aqui como número, ou null se nenhum usuário foi escolhido
   //   - sem usuário, a API deve responder 400; com um usuário que não existe, 404
   //   - se resposta.ok for false, mostre dados.mensagem
   //   - se deu certo, mostre "Tarefa criada" (tipo "sucesso"),
   //     limpe o formulário (formTarefa.reset()) e chame carregarTarefas()
-  mostrarAviso("TODO 4: criar tarefa ainda não foi implementado.");
+  mostrarAviso("TODO 3: criar tarefa ainda não foi implementado.");
 }
 
-// 5. CONCLUIR / REABRIR
+// 4. CONCLUIR / REABRIR
 async function alternarConclusao(tarefa) {
-  // TODO 5: se a tarefa está aberta, envie PATCH /tarefas/:id/concluir;
+  // TODO 4: se a tarefa está aberta, envie PATCH /tarefas/:id/concluir;
   //         se está concluída, envie PATCH /tarefas/:id/reabrir.
   //   - use tarefa.id para montar o caminho
   //   - se a resposta não for ok, mostre dados.mensagem
   //   - se deu certo, chame carregarTarefas()
-  mostrarAviso("TODO 5: concluir e reabrir ainda não foram implementados.");
+  mostrarAviso("TODO 4: concluir e reabrir ainda não foram implementados.");
 }
 
 // ---------- Eventos (prontos) ----------
 
-formUsuario.addEventListener("submit", (evento) => {
-  evento.preventDefault(); // não recarrega a página
-  esconderAviso();
-  criarUsuario(formUsuario.nome.value, formUsuario.email.value);
-});
-
 formTarefa.addEventListener("submit", (evento) => {
-  evento.preventDefault();
+  evento.preventDefault(); // não recarrega a página
   esconderAviso();
   const usuarioId = selectUsuario.value === "" ? null : Number(selectUsuario.value);
   criarTarefa(formTarefa.titulo.value, usuarioId, formTarefa.prioridade.value);

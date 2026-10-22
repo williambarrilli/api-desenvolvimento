@@ -30,7 +30,6 @@ section > h2 { margin-bottom: 12px; }
   border: 1px solid #dfe3e6;
   border-radius: 12px;
 }
-#form-usuario { grid-template-columns: 1fr 1fr auto; }
 #form-tarefa { grid-template-columns: 1fr 180px 130px auto; }
 label { grid-row: 1; font-size: 13px; font-weight: 600; color: #5b6169; }
 input, select, button { font: inherit; padding: 10px 12px; border-radius: 8px; }
@@ -58,9 +57,6 @@ button.secundario { background: transparent; color: #1d6a58; border: 1px solid #
 .lista li.concluida .titulo { text-decoration: line-through; color: #8a9097; }
 .titulo { flex: 1; }
 .dono { font-size: 13px; color: #5b6169; }
-.lista-usuarios { margin-top: 12px; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
-.lista-usuarios li { flex-direction: column; align-items: flex-start; gap: 2px; padding: 10px 14px; }
-.lista-usuarios .email { font-size: 13px; color: #5b6169; }
 .prioridade { font-size: 12px; font-weight: 600; padding: 2px 10px; border-radius: 999px; }
 .prioridade.alta { background: #f5deda; color: #9a2a20; }
 .prioridade.media { background: #f6e9c8; color: #7a4b00; }
@@ -69,6 +65,6 @@ button.secundario { background: transparent; color: #1d6a58; border: 1px solid #
 .vazia { color: #8a9097; background: transparent !important; border-style: dashed !important; }
 
 @media (max-width: 640px) {
-  #form-usuario, #form-tarefa { grid-template-columns: 1fr; }
+  #form-tarefa { grid-template-columns: 1fr; }
   label, input, select, .formulario button { grid-row: auto; }
 }
