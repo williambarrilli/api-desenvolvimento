@@ -12,6 +12,8 @@ export function listarTarefas() {
 }
 
 export function cadastrarTarefa(body) {
+
   const novaTarefa = new Tarefa(body);
+
   return tarefaRepository.criar(novaTarefa);
 }
