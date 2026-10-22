@@ -17,13 +17,3 @@ export function cadastrarTarefa(body) {
 
   return tarefaRepository.criar(novaTarefa);
 }
-export function atualizarTarefa(id, body) {
-  const tarefaAtual = tarefaRepository.buscarPorId(id);
-
-  if (!tarefaAtual) throw new Error("Tarefa não encontrada");
-
-  const dadosMesclados = { ...tarefaAtual, ...body };
-  const tarefaValidada = new Tarefa(dadosMesclados);
-
-  return tarefaRepository.atualizar(id, tarefaValidada);
-}
