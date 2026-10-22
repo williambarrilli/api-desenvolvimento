@@ -26,7 +26,13 @@ export function atualizarTarefa(id, body) {
     throw erro;
   }
 
-  const tarefaValidada = new Tarefa({ ...tarefaAtual, ...body });
+    const tarefaValidada = new Tarefa({ ...tarefaAtual, ...body });
+
+  if (tarefaAtual.concluida && tarefaValidada.prioridade !== tarefaAtual.prioridade) {
+    const erro = new Error("Não é possível mudar a prioridade de uma tarefa concluída");
+    erro.status = 409;
+    throw erro;
+  }
   const tituloNovo = tarefaValidada.titulo.toLowerCase();
 
   const repetido = tarefaRepository.listar().some((t) => t.id !== id && t.titulo.trim().toLowerCase() === tituloNovo);

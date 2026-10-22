@@ -61,7 +61,7 @@ export function atualizar(id, tarefa) {
   db.prepare(
     `
     UPDATE tarefas
-    SET titulo = ?, descricao = ?, prioridade = ?, concluida = ?, usuarioId = ?
+    SET titulo = ?, descricao = ?, prioridade = ?, concluida = ?
     WHERE id = ?
   `,
   ).run(
@@ -69,7 +69,6 @@ export function atualizar(id, tarefa) {
     dados.descricao ?? null,
     dados.prioridade ?? null,
     dados.concluida ? 1 : 0,
-    dados.usuarioId ?? null,
     id,
   );
 
