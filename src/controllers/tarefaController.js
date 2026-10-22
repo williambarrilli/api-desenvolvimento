@@ -46,3 +46,27 @@ export async function cadastrarTarefa(request, response) {
     });
   }
 }
+export async function atualizarTarefa(request, response) {
+  try {
+    const id = Number(request.params.id);
+    const tarefa = await tarefaLogic.atualizarTarefa(id, request.body ?? {});
+
+    if (!tarefa) {
+      return response.status(404).json({ mensagem: "Tarefa não encontrada" });
+    }
+
+    return response.status(200).json(tarefa);
+  } catch (error) {
+  return response.status(error.status ?? 400).json({ mensagem: error.message });
+}
+}
+
+export async function buscarTarefa(request, response) {
+  try {
+    const tarefa = await tarefaLogic.buscarTarefa(Number(request.params.id));
+
+    return response.status(200).json(tarefa);
+  } catch (error) {
+    return response.status(error.status ?? 500).json({ mensagem: error.message });
+  }
+}
