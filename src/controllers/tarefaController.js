@@ -57,6 +57,6 @@ export async function atualizarTarefa(request, response) {
 
     return response.status(200).json(tarefa);
   } catch (error) {
-    return response.status(400).json({ mensagem: error.message });
-  }
+  return response.status(error.status ?? 400).json({ mensagem: error.message });
+}
 }
