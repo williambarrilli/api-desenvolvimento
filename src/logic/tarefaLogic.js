@@ -12,11 +12,24 @@ export function listarTarefas() {
 }
 
 export function cadastrarTarefa(body) {
-
   const novaTarefa = new Tarefa(body);
+
+  if (novaTarefa.usuarioId !== null && !novaTarefa.concluida) {
+    const abertas = tarefaRepository
+      .listar()
+      .filter((t) => t.usuarioId === novaTarefa.usuarioId && !t.concluida).length;
+
+    if (abertas >= 3) {
+      const erro = new Error("O usuário já tem 3 tarefas abertas");
+      erro.status = 409;
+      throw erro;
+    }
+  }
 
   return tarefaRepository.criar(novaTarefa);
 }
+
+
 export function atualizarTarefa(id, body) {
   const tarefaAtual = tarefaRepository.buscarPorId(id);
 

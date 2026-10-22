@@ -1,6 +1,8 @@
 export class Tarefa {
     static PRIORIDADES =["alta", "media","baixa"]
-    constructor({titulo, descricao = null, prioridade = "media", concluida = false}){
+    constructor({titulo, descricao = null, prioridade = "media", concluida = false, usuarioId = null}){
+
+  
 
         if(typeof titulo !== 'string'|| titulo.trim() === ''){
             throw new Error ("O Campo de titulo é obrigatorio")
@@ -40,6 +42,7 @@ export class Tarefa {
         this.descricao = descricao
         this.prioridade = prioridade
         this.concluida = concluida
+        this.usuarioId = usuarioId
     }
     concluirTarefa(){
         if(this.concluida === true){
