@@ -46,13 +46,17 @@ export async function cadastrarTarefa(request, response) {
     });
   }
 }
-export function atualizarTarefa(id, body) {
-  const tarefaAtual = tarefaRepository.buscarPorId(id);
+export async function atualizarTarefa(request, response) {
+  try {
+    const id = Number(request.params.id);
+    const tarefa = await tarefaLogic.atualizarTarefa(id, request.body ?? {});
 
-  if (!tarefaAtual) throw new Error("Tarefa não encontrada");
+    if (!tarefa) {
+      return response.status(404).json({ mensagem: "Tarefa não encontrada" });
+    }
 
-  const dadosMesclados = { ...tarefaAtual, ...body };
-  const tarefaValidada = new Tarefa(dadosMesclados);
-
-  return tarefaRepository.atualizar(id, tarefaValidada);
+    return response.status(200).json(tarefa);
+  } catch (error) {
+    return response.status(400).json({ mensagem: error.message });
+  }
 }

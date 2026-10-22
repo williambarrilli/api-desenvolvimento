@@ -8,7 +8,7 @@ export class Tarefa {
 
          if(titulo.trim().length < 3 || titulo.trim().length > 100){
             throw new Error ("O titulo deve ter entre 3 a 100 caracteres ")
-        }git
+        }
         if(!isNaN(titulo.trim())){
             throw new Error ("O titulo não pode conter apenas números")
         }
