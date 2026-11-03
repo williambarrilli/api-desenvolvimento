@@ -3,7 +3,8 @@ import * as tarefaLogic from "../logic/tarefaLogic.js";
 
 export async function obterTarefa(request, response) {
   try {
-    const tarefa = await tarefaLogic.obterTarefa();
+    const { id } = request.params;
+    const tarefa = await tarefaLogic.obterTarefa(id);
 
     return response.status(200).json(tarefa);
   } catch (error) {

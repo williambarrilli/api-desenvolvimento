@@ -1,6 +1,7 @@
 // Representa a entidade do domínio: o que é uma tarefa e quais regras
 // ela precisa cumprir para existir. A validação fica no construtor, então
 // um objeto Tarefa inválido nunca chega a ser criado.
+import { obterTarefa } from "../logic/tarefaLogic"; 
 export class Tarefa {
   constructor({
     id,
@@ -27,6 +28,9 @@ export class Tarefa {
     }
     if(typeof descricao !== "string") {
       throw new Error("O campo descricao deve ser uma string");
+    }
+    if(titulo.trim() === obterTarefa(id).titulo) {
+      throw new Error("O campo titulo deve ser único");
     }
 
     this.id = id;
