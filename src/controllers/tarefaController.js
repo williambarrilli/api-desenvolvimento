@@ -54,7 +54,7 @@ export async function cadastrarTarefa(request, response) {
       return response.status(200).json(tarefaAtualizada);
     } catch (error) {
         console.error(`Erro ao atualizar tarefa: ${error.message}`);
-        return response.status(400).json({ mensagem: error.message });
+        return response.status(error.status).json({ mensagem: error.message });
 
     }
   }

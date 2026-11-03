@@ -29,8 +29,10 @@ export class Tarefa {
     if(typeof descricao !== "string") {
       throw new Error("O campo descricao deve ser uma string");
     }
-    if(titulo.trim() === tarefaRepository.buscarPorId(id).titulo) {
-      throw new Error("O campo titulo deve ser único");
+    if(titulo.trim() === tarefaRepository.buscarPorId(id)?.titulo) {
+      const erro = new Error("O campo titulo deve ser único");
+      erro.status = 409;
+      throw erro; 
     }
 
     this.id = id;

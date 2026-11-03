@@ -20,11 +20,10 @@ export function cadastrarTarefa(body) {
 }
 export function atualizarTarefa(id, body) {
   const tarefaAtualizada = new Tarefa({
-    id: Number(id),
     titulo: body.titulo,
     descricao: body.descricao,
     prioridade: body.prioridade,
     concluida: body.concluida,
   });
-  return tarefaRepository.atualizar(tarefaAtualizada);
+  return tarefaRepository.atualizar( id, tarefaAtualizada);
 }
