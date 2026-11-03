@@ -29,11 +29,7 @@ export class Tarefa {
     if(typeof descricao !== "string") {
       throw new Error("O campo descricao deve ser uma string");
     }
-    if(titulo.trim() === tarefaRepository.buscarPorId(id).titulo) {
-      const erro = new Error("O campo titulo deve ser único");
-      erro.status = 409;
-      throw erro; 
-    }
+    
 
     this.id = id;
     this.titulo = titulo.trim();
@@ -41,4 +37,35 @@ export class Tarefa {
     this.prioridade = prioridade;
     this.concluida = concluida;
   }
+  atualizar({ titulo, descricao, prioridade, concluida }) {
+    if (titulo !== undefined) {
+      this.titulo = titulo.trim();
+    }
+    if (titulo.trim() === "") {
+      throw new Error("O campo titulo é obrigatório");
+    }
+    if (typeof titulo.trim() !== "string" || !isNaN(titulo.trim())) {
+      throw new Error("O campo titulo deve ser uma string");
+    }
+    if(titulo.trim().toLocaleLowerCase() === tarefaRepository.buscarPorId(id).titulo.toLocaleLowerCase() ) {
+      const erro = new Error("O campo titulo deve ser único");
+      erro.status = 409;
+      throw erro; 
+    }
+    const prioridades = ["baixa", "media", "alta"];
+    if (prioridade !== undefined && !prioridades.includes(prioridade)) {
+      throw new Error(
+        `O campo prioridade deve ser: ${prioridades.join(", ")}`,
+      );
+    }
+    if (descricao !== undefined) {
+      this.descricao = descricao.trim() === "" ? null : descricao.trim();
+    }
+    if (prioridade !== undefined) {
+      this.prioridade = prioridade;
+    }
+    if (concluida !== undefined) {
+      this.concluida = concluida;
+    }
+  } 
 }

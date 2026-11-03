@@ -19,7 +19,7 @@ export function cadastrarTarefa(body) {
   return tarefaRepository.criar(novaTarefa);
 }
 export function atualizarTarefa(id, body) {
-  const tarefaAtualizada = new Tarefa({
+  const tarefaAtualizada =  Tarefa.atualizar({
     titulo: body.titulo,
     descricao: body.descricao,
     prioridade: body.prioridade,
