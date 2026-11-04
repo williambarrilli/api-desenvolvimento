@@ -19,11 +19,31 @@ export function cadastrarTarefa(body) {
   return tarefaRepository.criar(novaTarefa);
 }
 export function atualizarTarefa(id, body) {
-  const tarefaAtualizada =  Tarefa.atualizar({
-    titulo: body.titulo,
-    descricao: body.descricao,
-    prioridade: body.prioridade,
-    concluida: body.concluida,
-  });
-  return tarefaRepository.atualizar( id, tarefaAtualizada);
+  const atual = tarefaRepository.buscarPorId(id);
+
+  if (!atual) {
+    const erro = new Error("Tarefa não encontrada");
+    erro.status = 404;
+    throw erro;
+  }
+
+
+  const  tarefa = new Tarefa({
+      titulo: body.titulo ?? atual.titulo,
+      descricao: body.descricao ?? atual.descricao ?? "",
+      prioridade: body.prioridade ?? atual.prioridade ?? undefined,
+      concluida: body.concluida ?? atual.concluida,
+    })
+
+  const duplicada = tarefaRepository
+    .listar()
+    .some((t) => t.id !== atual.id && t.titulo.toLowerCase() === tarefa.titulo.toLowerCase());
+
+  if (duplicada) {
+    const erro = new Error("O campo titulo deve ser único");
+    erro.status = 409;
+    throw erro;
+  }
+
+  return tarefaRepository.atualizar(atual.id, tarefa);
 }

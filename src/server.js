@@ -28,6 +28,7 @@ app.use(express.json());
 
 app.get("/", tarefaController.obterTarefa);
 app.get("/tarefas", tarefaController.listarTarefas);
+app.get("/tarefas/:id", tarefaController.obterTarefa);
 app.post("/tarefas", tarefaController.cadastrarTarefa);
 app.patch("/tarefas/:id", tarefaController.atualizarTarefa);
 
