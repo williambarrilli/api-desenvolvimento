@@ -32,6 +32,24 @@ export async function buscarUsuario(request, response) {
   }
 }
 
+export async function listarTarefasDoUsuario(request, response) {
+  try {
+    const tarefas = await usuarioLogic.listarTarefasDoUsuario(request.params.id);
+
+    return response.status(200).json(tarefas);
+  } catch (error) {
+    if (error.status) {
+      return response.status(error.status).json({ mensagem: error.message });
+    }
+
+    console.error(`Erro ao listar tarefas do usuário: ${error.message}`);
+
+    return response.status(500).json({
+      mensagem: "Erro interno do servidor",
+    });
+  }
+}
+
 export async function cadastrarUsuario(request, response) {
   try {
     const usuario = await usuarioLogic.cadastrarUsuario(request.body ?? {});

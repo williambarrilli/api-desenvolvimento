@@ -33,6 +33,14 @@ export function pesquisarPorTitulo(busca) {
 }
 
 // Retorna uma tarefa pelo id ou null quando ela não existe.
+export function listarPorUsuario(usuarioId) {
+  const tarefas = db
+    .prepare("SELECT * FROM tarefas WHERE usuarioId = ? ORDER BY id")
+    .all(usuarioId);
+
+  return tarefas.map(mapearTarefa);
+}
+
 export function resumo() {
   const linha = db
     .prepare(

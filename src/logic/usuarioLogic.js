@@ -1,5 +1,6 @@
 import { Usuario } from "../models/usuario.js";
 import * as usuarioRepository from "../repositories/usuarioRepository.js";
+import * as tarefaRepository from "../repositories/tarefaRepository.js";
 
 export function listarUsuarios() {
   return usuarioRepository.listar();
@@ -23,6 +24,12 @@ export function buscarUsuario(idInformado) {
   }
 
   return usuario;
+}
+
+export function listarTarefasDoUsuario(idInformado) {
+  const usuario = buscarUsuario(idInformado);
+
+  return tarefaRepository.listarPorUsuario(usuario.id);
 }
 
 export function cadastrarUsuario(body) {

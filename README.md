@@ -140,6 +140,15 @@ para ID inválido e HTTP 404 quando o usuário não existe.
 curl http://localhost:3000/usuarios/1
 ```
 
+### `GET /usuarios/:id/tarefas`
+
+Lista somente as tarefas do usuário informado (US-2776). Retorna HTTP 400 para
+ID inválido e HTTP 404 quando o usuário não existe.
+
+```bash
+curl http://localhost:3000/usuarios/1/tarefas
+```
+
 ### `POST /usuarios`
 
 Cadastra um usuário (US-2771). `nome` e `email` são obrigatórios e o e-mail

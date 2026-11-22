@@ -35,6 +35,7 @@ app.patch("/tarefas/:id", tarefaController.atualizarTarefa);
 app.get("/tarefas/:id", tarefaController.buscarTarefa);
 app.get("/usuarios", usuarioController.listarUsuarios);
 app.get("/usuarios/:id", usuarioController.buscarUsuario);
+app.get("/usuarios/:id/tarefas", usuarioController.listarTarefasDoUsuario);
 app.post("/usuarios", usuarioController.cadastrarUsuario);
 
 
