@@ -32,6 +32,17 @@ export function listarTarefas(filtros = {}) {
 export function cadastrarTarefa(body) {
   const novaTarefa = new Tarefa(body);
 
+  const tituloNormalizado = novaTarefa.titulo.toLowerCase();
+  const duplicada = tarefaRepository
+    .listar()
+    .some((t) => t.titulo.trim().toLowerCase() === tituloNormalizado);
+
+  if (duplicada) {
+    const erro = new Error("Já existe uma tarefa com esse título");
+    erro.status = 409;
+    throw erro;
+  }
+
   if (novaTarefa.usuarioId !== null && !novaTarefa.concluida) {
     const abertas = tarefaRepository
       .listar()
