@@ -113,7 +113,7 @@ Retorna os totais das tarefas (US-2770):
   "total": 3,
   "concluidas": 1,
   "pendentes": 2,
-  "prioridades": { "baixa": 1, "media": 1, "alta": 1 }
+  "porPrioridade": { "baixa": 1, "media": 1, "alta": 1 }
 }
 ```
 

@@ -53,7 +53,7 @@ export function resumo() {
     total: linha.total,
     concluidas: linha.concluidas,
     pendentes: linha.pendentes,
-    prioridades: {
+    porPrioridade: {
       baixa: linha.baixa,
       media: linha.media,
       alta: linha.alta,
