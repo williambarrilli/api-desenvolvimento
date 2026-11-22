@@ -99,3 +99,7 @@ export function buscarTarefa(id) {
 
   return tarefa;
 }
+
+export function obterResumo() {
+  return tarefaRepository.resumo();
+}

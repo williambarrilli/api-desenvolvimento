@@ -104,6 +104,23 @@ curl -X POST http://localhost:3000/tarefas \
   -d '{"titulo": "Nova tarefa", "prioridade": "alta"}'
 ```
 
+### `GET /tarefas/resumo`
+
+Retorna os totais das tarefas (US-2770):
+
+```json
+{
+  "total": 3,
+  "concluidas": 1,
+  "pendentes": 2,
+  "prioridades": { "baixa": 1, "media": 1, "alta": 1 }
+}
+```
+
+```bash
+curl http://localhost:3000/tarefas/resumo
+```
+
 ## Exemplo direto do repository
 
 O comando abaixo mostra `listar`, `criar`, `buscarPorId`, `atualizar` e

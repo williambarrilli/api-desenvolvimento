@@ -33,6 +33,34 @@ export function pesquisarPorTitulo(busca) {
 }
 
 // Retorna uma tarefa pelo id ou null quando ela não existe.
+export function resumo() {
+  const linha = db
+    .prepare(
+      `
+      SELECT
+        COUNT(*) AS total,
+        COALESCE(SUM(CASE WHEN concluida = 1 THEN 1 ELSE 0 END), 0) AS concluidas,
+        COALESCE(SUM(CASE WHEN concluida = 0 THEN 1 ELSE 0 END), 0) AS pendentes,
+        COALESCE(SUM(CASE WHEN prioridade = 'baixa' THEN 1 ELSE 0 END), 0) AS baixa,
+        COALESCE(SUM(CASE WHEN prioridade = 'media' THEN 1 ELSE 0 END), 0) AS media,
+        COALESCE(SUM(CASE WHEN prioridade = 'alta' THEN 1 ELSE 0 END), 0) AS alta
+      FROM tarefas
+    `,
+    )
+    .get();
+
+  return {
+    total: linha.total,
+    concluidas: linha.concluidas,
+    pendentes: linha.pendentes,
+    prioridades: {
+      baixa: linha.baixa,
+      media: linha.media,
+      alta: linha.alta,
+    },
+  };
+}
+
 export function buscarPorId(id) {
   // O ? mantém o valor separado do SQL e evita montar a consulta com strings.
   const tarefa = db.prepare("SELECT * FROM tarefas WHERE id = ?").get(id);
