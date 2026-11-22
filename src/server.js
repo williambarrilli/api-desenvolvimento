@@ -1,6 +1,7 @@
 import express from "express";
 import { fileURLToPath } from "node:url";
 import * as tarefaController from "./controllers/tarefaController.js";
+import * as usuarioController from "./controllers/usuarioController.js";
 
 const app = express();
 const PORTA = Number(process.env.PORT || 3000);
@@ -10,7 +11,7 @@ app.use((request, response, next) => {
   response.setHeader("Access-Control-Allow-Origin", "*");
   response.setHeader(
     "Access-Control-Allow-Methods",
-    "GET,OPTIONS",
+    "GET,POST,PATCH,OPTIONS",
   );
   response.setHeader(
     "Access-Control-Allow-Headers",
@@ -28,6 +29,15 @@ app.use(express.json());
 
 app.get("/", tarefaController.obterTarefa);
 app.get("/tarefas", tarefaController.listarTarefas);
+app.get("/tarefas/resumo", tarefaController.obterResumo);
+app.post("/tarefas", tarefaController.cadastrarTarefa);
+app.patch("/tarefas/:id", tarefaController.atualizarTarefa);
+app.get("/tarefas/:id", tarefaController.buscarTarefa);
+app.get("/usuarios", usuarioController.listarUsuarios);
+app.get("/usuarios/:id", usuarioController.buscarUsuario);
+app.get("/usuarios/:id/tarefas", usuarioController.listarTarefasDoUsuario);
+app.post("/usuarios", usuarioController.cadastrarUsuario);
+
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   app.listen(PORTA, () => {
