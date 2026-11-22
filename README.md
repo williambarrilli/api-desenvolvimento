@@ -84,6 +84,63 @@ Lista as tarefas:
 curl http://localhost:3000/tarefas
 ```
 
+### `GET /tarefas?busca=texto`
+
+Pesquisa tarefas pelo título (US-2768). A busca é parcial e não diferencia
+maiúsculas de minúsculas. Sem correspondência, retorna `[]`.
+
+```bash
+curl "http://localhost:3000/tarefas?busca=estudar"
+```
+
+### `POST /tarefas`
+
+Cadastra uma tarefa. Títulos repetidos são recusados com HTTP 409 (US-2769):
+a comparação ignora espaços nas extremidades e maiúsculas/minúsculas.
+
+```bash
+curl -X POST http://localhost:3000/tarefas \
+  -H "Content-Type: application/json" \
+  -d '{"titulo": "Nova tarefa", "prioridade": "alta"}'
+```
+
+### `GET /tarefas/resumo`
+
+Retorna os totais das tarefas (US-2770):
+
+```json
+{
+  "total": 3,
+  "concluidas": 1,
+  "pendentes": 2,
+  "porPrioridade": { "baixa": 1, "media": 1, "alta": 1 }
+}
+```
+
+```bash
+curl http://localhost:3000/tarefas/resumo
+```
+
+### `GET /usuarios`
+
+Lista os usuários com `id`, `nome` e `email` (US-2772):
+
+```bash
+curl http://localhost:3000/usuarios
+```
+
+### `POST /usuarios`
+
+Cadastra um usuário (US-2771). `nome` e `email` são obrigatórios e o e-mail
+precisa ter formato válido. Retorna HTTP 201 com o usuário criado ou HTTP 400
+para dados inválidos.
+
+```bash
+curl -X POST http://localhost:3000/usuarios \
+  -H "Content-Type: application/json" \
+  -d '{"nome": "Carla", "email": "carla@email.com"}'
+```
+
 ## Exemplo direto do repository
 
 O comando abaixo mostra `listar`, `criar`, `buscarPorId`, `atualizar` e
@@ -101,6 +158,9 @@ npm run exemplo
 - `src/models/tarefa.js`: modelo disponível para as próximas atividades.
 - `src/database/conexao.js`: abre o banco e executa `data/banco.sql`.
 - `src/repositories/tarefaRepository.js`: executa o SQL do CRUD de tarefas.
+- `src/models/usuario.js`, `src/controllers/usuarioController.js`,
+  `src/logic/usuarioLogic.js` e `src/repositories/usuarioRepository.js`:
+  camadas do cadastro de usuários.
 - `src/exemplo-repository.js`: demonstra o repository no terminal.
 - `data/banco.sql`: define tabelas e dados iniciais.
 
