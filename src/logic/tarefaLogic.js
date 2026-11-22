@@ -9,7 +9,17 @@ export function obterTarefa() {
 
 
 export function listarTarefas(filtros = {}) {
-  const { busca } = filtros;
+  const { busca, usuarioId } = filtros;
+
+  if (usuarioId !== undefined) {
+    if (typeof usuarioId !== "string" || !/^\d+$/.test(usuarioId) || Number(usuarioId) <= 0) {
+      const erro = new Error("O parâmetro usuarioId deve ser um número inteiro positivo");
+      erro.status = 400;
+      throw erro;
+    }
+
+    return tarefaRepository.listarPorUsuario(Number(usuarioId));
+  }
 
   if (busca === undefined) {
     return tarefaRepository.listar();

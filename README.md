@@ -93,6 +93,15 @@ maiúsculas de minúsculas. Sem correspondência, retorna `[]`.
 curl "http://localhost:3000/tarefas?busca=estudar"
 ```
 
+### `GET /tarefas?usuarioId=1`
+
+Filtra as tarefas pelo usuário informado (US-2777). Um usuário sem tarefas
+retorna `[]` e um `usuarioId` inválido retorna HTTP 400.
+
+```bash
+curl "http://localhost:3000/tarefas?usuarioId=1"
+```
+
 ### `POST /tarefas`
 
 Cadastra uma tarefa vinculada a um usuário (US-2775). O campo `usuarioId` é
