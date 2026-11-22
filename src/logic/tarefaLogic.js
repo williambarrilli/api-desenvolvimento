@@ -1,5 +1,6 @@
 import { Tarefa } from "../models/tarefa.js";
 import * as tarefaRepository from "../repositories/tarefaRepository.js";
+import * as usuarioRepository from "../repositories/usuarioRepository.js";
 
 
 export function obterTarefa() {
@@ -31,6 +32,24 @@ export function listarTarefas(filtros = {}) {
 
 export function cadastrarTarefa(body) {
   const novaTarefa = new Tarefa(body);
+
+  if (body.usuarioId === undefined || body.usuarioId === null) {
+    const erro = new Error("O campo usuarioId é obrigatório");
+    erro.status = 400;
+    throw erro;
+  }
+
+  if (!Number.isInteger(body.usuarioId) || body.usuarioId <= 0) {
+    const erro = new Error("O campo usuarioId deve ser um número inteiro positivo");
+    erro.status = 400;
+    throw erro;
+  }
+
+  if (!usuarioRepository.buscarPorId(body.usuarioId)) {
+    const erro = new Error("Usuário não encontrado");
+    erro.status = 404;
+    throw erro;
+  }
 
   const tituloNormalizado = novaTarefa.titulo.toLowerCase();
   const duplicada = tarefaRepository

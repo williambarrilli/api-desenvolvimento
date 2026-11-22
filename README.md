@@ -95,13 +95,15 @@ curl "http://localhost:3000/tarefas?busca=estudar"
 
 ### `POST /tarefas`
 
-Cadastra uma tarefa. Títulos repetidos são recusados com HTTP 409 (US-2769):
+Cadastra uma tarefa vinculada a um usuário (US-2775). O campo `usuarioId` é
+obrigatório: sem ele ou com valor inválido a resposta é HTTP 400, e um usuário
+inexistente retorna HTTP 404. Títulos repetidos são recusados com HTTP 409 (US-2769):
 a comparação ignora espaços nas extremidades e maiúsculas/minúsculas.
 
 ```bash
 curl -X POST http://localhost:3000/tarefas \
   -H "Content-Type: application/json" \
-  -d '{"titulo": "Nova tarefa", "prioridade": "alta"}'
+  -d '{"titulo": "Nova tarefa", "prioridade": "alta", "usuarioId": 1}'
 ```
 
 ### `GET /tarefas/resumo`
