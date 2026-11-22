@@ -1,6 +1,7 @@
 import express from "express";
 import { fileURLToPath } from "node:url";
 import * as tarefaController from "./controllers/tarefaController.js";
+import * as usuarioController from "./controllers/usuarioController.js";
 
 const app = express();
 const PORTA = Number(process.env.PORT || 3000);
@@ -32,6 +33,7 @@ app.get("/tarefas/resumo", tarefaController.obterResumo);
 app.post("/tarefas", tarefaController.cadastrarTarefa);
 app.patch("/tarefas/:id", tarefaController.atualizarTarefa);
 app.get("/tarefas/:id", tarefaController.buscarTarefa);
+app.post("/usuarios", usuarioController.cadastrarUsuario);
 
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {

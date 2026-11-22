@@ -121,6 +121,18 @@ Retorna os totais das tarefas (US-2770):
 curl http://localhost:3000/tarefas/resumo
 ```
 
+### `POST /usuarios`
+
+Cadastra um usuário (US-2771). `nome` e `email` são obrigatórios e o e-mail
+precisa ter formato válido. Retorna HTTP 201 com o usuário criado ou HTTP 400
+para dados inválidos.
+
+```bash
+curl -X POST http://localhost:3000/usuarios \
+  -H "Content-Type: application/json" \
+  -d '{"nome": "Carla", "email": "carla@email.com"}'
+```
+
 ## Exemplo direto do repository
 
 O comando abaixo mostra `listar`, `criar`, `buscarPorId`, `atualizar` e
@@ -138,6 +150,9 @@ npm run exemplo
 - `src/models/tarefa.js`: modelo disponível para as próximas atividades.
 - `src/database/conexao.js`: abre o banco e executa `data/banco.sql`.
 - `src/repositories/tarefaRepository.js`: executa o SQL do CRUD de tarefas.
+- `src/models/usuario.js`, `src/controllers/usuarioController.js`,
+  `src/logic/usuarioLogic.js` e `src/repositories/usuarioRepository.js`:
+  camadas do cadastro de usuários.
 - `src/exemplo-repository.js`: demonstra o repository no terminal.
 - `data/banco.sql`: define tabelas e dados iniciais.
 
