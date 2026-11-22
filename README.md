@@ -84,6 +84,26 @@ Lista as tarefas:
 curl http://localhost:3000/tarefas
 ```
 
+### `GET /tarefas?busca=texto`
+
+Pesquisa tarefas pelo título (US-2768). A busca é parcial e não diferencia
+maiúsculas de minúsculas. Sem correspondência, retorna `[]`.
+
+```bash
+curl "http://localhost:3000/tarefas?busca=estudar"
+```
+
+### `POST /tarefas`
+
+Cadastra uma tarefa. Títulos repetidos são recusados com HTTP 409 (US-2769):
+a comparação ignora espaços nas extremidades e maiúsculas/minúsculas.
+
+```bash
+curl -X POST http://localhost:3000/tarefas \
+  -H "Content-Type: application/json" \
+  -d '{"titulo": "Nova tarefa", "prioridade": "alta"}'
+```
+
 ## Exemplo direto do repository
 
 O comando abaixo mostra `listar`, `criar`, `buscarPorId`, `atualizar` e
