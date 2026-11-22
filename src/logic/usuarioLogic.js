@@ -35,5 +35,11 @@ export function cadastrarUsuario(body) {
     throw error;
   }
 
+  if (usuarioRepository.buscarPorEmail(novoUsuario.email)) {
+    const erro = new Error("Já existe um usuário com esse e-mail");
+    erro.status = 409;
+    throw erro;
+  }
+
   return usuarioRepository.criar(novoUsuario);
 }

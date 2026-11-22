@@ -12,6 +12,16 @@ export function buscarPorId(id) {
   return usuario ?? null;
 }
 
+export function buscarPorEmail(email) {
+  const usuario = db
+    .prepare(
+      "SELECT id, nome, email FROM usuarios WHERE LOWER(TRIM(email)) = LOWER(TRIM(?))",
+    )
+    .get(email);
+
+  return usuario ?? null;
+}
+
 export function criar(usuario) {
   const resultado = db
     .prepare("INSERT INTO usuarios (nome, email) VALUES (?, ?)")

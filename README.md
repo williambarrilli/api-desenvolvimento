@@ -144,6 +144,9 @@ Cadastra um usuário (US-2771). `nome` e `email` são obrigatórios e o e-mail
 precisa ter formato válido. Retorna HTTP 201 com o usuário criado ou HTTP 400
 para dados inválidos.
 
+Um e-mail já cadastrado retorna HTTP 409 (US-2774). A comparação ignora
+espaços nas extremidades e maiúsculas/minúsculas.
+
 ```bash
 curl -X POST http://localhost:3000/usuarios \
   -H "Content-Type: application/json" \
