@@ -20,6 +20,18 @@ export function listar() {
   return tarefas.map(mapearTarefa);
 }
 
+export function pesquisarPorTitulo(busca) {
+  const termo = busca.replace(/[\\%_]/g, (caractere) => `\\${caractere}`);
+
+  const tarefas = db
+    .prepare(
+      "SELECT * FROM tarefas WHERE LOWER(titulo) LIKE LOWER(?) ESCAPE '\\' ORDER BY id",
+    )
+    .all(`%${termo}%`);
+
+  return tarefas.map(mapearTarefa);
+}
+
 // Retorna uma tarefa pelo id ou null quando ela não existe.
 export function buscarPorId(id) {
   // O ? mantém o valor separado do SQL e evita montar a consulta com strings.
@@ -34,8 +46,8 @@ export function criar(tarefa) {
     .prepare(
       `
       INSERT INTO tarefas
-        (titulo, descricao, prioridade, concluida)
-      VALUES (?, ?, ?, ?)
+        (titulo, descricao, prioridade, concluida, usuarioId)
+          VALUES (?, ?, ?, ?, ?)
     `,
     )
     .run(
@@ -43,6 +55,7 @@ export function criar(tarefa) {
       tarefa.descricao ?? null,
       tarefa.prioridade ?? null,
       tarefa.concluida ? 1 : 0,
+      tarefa.usuarioId ?? null,
     );
 
   return buscarPorId(Number(resultado.lastInsertRowid));
@@ -61,7 +74,7 @@ export function atualizar(id, tarefa) {
   db.prepare(
     `
     UPDATE tarefas
-    SET titulo = ?, descricao = ?, prioridade = ?, concluida = ?, usuarioId = ?
+    SET titulo = ?, descricao = ?, prioridade = ?, concluida = ?
     WHERE id = ?
   `,
   ).run(
@@ -69,7 +82,6 @@ export function atualizar(id, tarefa) {
     dados.descricao ?? null,
     dados.prioridade ?? null,
     dados.concluida ? 1 : 0,
-    dados.usuarioId ?? null,
     id,
   );
 

@@ -84,6 +84,15 @@ Lista as tarefas:
 curl http://localhost:3000/tarefas
 ```
 
+### `GET /tarefas?busca=texto`
+
+Pesquisa tarefas pelo título (US-2768). A busca é parcial e não diferencia
+maiúsculas de minúsculas. Sem correspondência, retorna `[]`.
+
+```bash
+curl "http://localhost:3000/tarefas?busca=estudar"
+```
+
 ## Exemplo direto do repository
 
 O comando abaixo mostra `listar`, `criar`, `buscarPorId`, `atualizar` e
