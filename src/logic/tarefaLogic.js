@@ -7,8 +7,26 @@ export function obterTarefa() {
 }
 
 
-export function listarTarefas() {
-  return tarefaRepository.listar();
+export function listarTarefas(filtros = {}) {
+  const { busca } = filtros;
+
+  if (busca === undefined) {
+    return tarefaRepository.listar();
+  }
+
+  if (typeof busca !== "string") {
+    const erro = new Error("O parâmetro busca deve ser um texto");
+    erro.status = 400;
+    throw erro;
+  }
+
+  const termo = busca.trim();
+
+  if (termo === "") {
+    return tarefaRepository.listar();
+  }
+
+  return tarefaRepository.pesquisarPorTitulo(termo);
 }
 
 export function cadastrarTarefa(body) {

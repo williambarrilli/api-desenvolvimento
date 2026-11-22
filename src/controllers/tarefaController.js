@@ -17,10 +17,14 @@ export async function obterTarefa(request, response) {
 
 export async function listarTarefas(request, response) {
   try {
-    const tarefas = await tarefaLogic.listarTarefas();
+    const tarefas = await tarefaLogic.listarTarefas(request.query);
 
     return response.status(200).json(tarefas);
   } catch (error) {
+    if (error.status) {
+      return response.status(error.status).json({ mensagem: error.message });
+    }
+
     console.error(`Erro ao listar tarefas: ${error.message}`);
 
     return response.status(500).json({
