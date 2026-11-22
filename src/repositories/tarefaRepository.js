@@ -20,7 +20,55 @@ export function listar() {
   return tarefas.map(mapearTarefa);
 }
 
+export function pesquisarPorTitulo(busca) {
+  const termo = busca.replace(/[\\%_]/g, (caractere) => `\\${caractere}`);
+
+  const tarefas = db
+    .prepare(
+      "SELECT * FROM tarefas WHERE LOWER(titulo) LIKE LOWER(?) ESCAPE '\\' ORDER BY id",
+    )
+    .all(`%${termo}%`);
+
+  return tarefas.map(mapearTarefa);
+}
+
 // Retorna uma tarefa pelo id ou null quando ela não existe.
+export function listarPorUsuario(usuarioId) {
+  const tarefas = db
+    .prepare("SELECT * FROM tarefas WHERE usuarioId = ? ORDER BY id")
+    .all(usuarioId);
+
+  return tarefas.map(mapearTarefa);
+}
+
+export function resumo() {
+  const linha = db
+    .prepare(
+      `
+      SELECT
+        COUNT(*) AS total,
+        COALESCE(SUM(CASE WHEN concluida = 1 THEN 1 ELSE 0 END), 0) AS concluidas,
+        COALESCE(SUM(CASE WHEN concluida = 0 THEN 1 ELSE 0 END), 0) AS pendentes,
+        COALESCE(SUM(CASE WHEN prioridade = 'baixa' THEN 1 ELSE 0 END), 0) AS baixa,
+        COALESCE(SUM(CASE WHEN prioridade = 'media' THEN 1 ELSE 0 END), 0) AS media,
+        COALESCE(SUM(CASE WHEN prioridade = 'alta' THEN 1 ELSE 0 END), 0) AS alta
+      FROM tarefas
+    `,
+    )
+    .get();
+
+  return {
+    total: linha.total,
+    concluidas: linha.concluidas,
+    pendentes: linha.pendentes,
+    porPrioridade: {
+      baixa: linha.baixa,
+      media: linha.media,
+      alta: linha.alta,
+    },
+  };
+}
+
 export function buscarPorId(id) {
   // O ? mantém o valor separado do SQL e evita montar a consulta com strings.
   const tarefa = db.prepare("SELECT * FROM tarefas WHERE id = ?").get(id);
@@ -34,8 +82,8 @@ export function criar(tarefa) {
     .prepare(
       `
       INSERT INTO tarefas
-        (titulo, descricao, prioridade, concluida)
-      VALUES (?, ?, ?, ?)
+        (titulo, descricao, prioridade, concluida, usuarioId)
+          VALUES (?, ?, ?, ?, ?)
     `,
     )
     .run(
@@ -43,6 +91,7 @@ export function criar(tarefa) {
       tarefa.descricao ?? null,
       tarefa.prioridade ?? null,
       tarefa.concluida ? 1 : 0,
+      tarefa.usuarioId ?? null,
     );
 
   return buscarPorId(Number(resultado.lastInsertRowid));
@@ -61,7 +110,7 @@ export function atualizar(id, tarefa) {
   db.prepare(
     `
     UPDATE tarefas
-    SET titulo = ?, descricao = ?, prioridade = ?, concluida = ?, usuarioId = ?
+    SET titulo = ?, descricao = ?, prioridade = ?, concluida = ?
     WHERE id = ?
   `,
   ).run(
@@ -69,7 +118,6 @@ export function atualizar(id, tarefa) {
     dados.descricao ?? null,
     dados.prioridade ?? null,
     dados.concluida ? 1 : 0,
-    dados.usuarioId ?? null,
     id,
   );
 
@@ -77,6 +125,12 @@ export function atualizar(id, tarefa) {
 }
 
 // Remove uma tarefa e informa se alguma linha foi removida.
+export function transferir(id, usuarioId) {
+  db.prepare("UPDATE tarefas SET usuarioId = ? WHERE id = ?").run(usuarioId, id);
+
+  return buscarPorId(id);
+}
+
 export function remover(id) {
   const resultado = db.prepare("DELETE FROM tarefas WHERE id = ?").run(id);
 
