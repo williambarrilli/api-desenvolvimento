@@ -1,29 +1,61 @@
-// Representa a entidade do domínio: o que é uma tarefa e quais regras
-// ela precisa cumprir para existir. A validação fica no construtor, então
-// um objeto Tarefa inválido nunca chega a ser criado.
 export class Tarefa {
-  constructor({
-    id,
-    titulo,
-    descricao = "",
-    prioridade = "media",
-    concluida = false,
-  }) {
-    if (typeof titulo !== "string" || titulo.trim() === "") {
-      throw new Error("O campo titulo é obrigatório");
-    }
+    static PRIORIDADES =["alta", "media","baixa"]
+    constructor({titulo, descricao = null, prioridade = "media", concluida = false, usuarioId = null}){
 
-    const prioridades = ["baixa", "media", "alta"];
-    if (!prioridades.includes(prioridade)) {
-      throw new Error(
-        `O campo prioridade deve ser: ${prioridades.join(", ")}`,
-      );
-    }
+  
 
-    this.id = id;
-    this.titulo = titulo.trim();
-    this.descricao = descricao;
-    this.prioridade = prioridade;
-    this.concluida = concluida;
-  }
+        if(typeof titulo !== 'string'|| titulo.trim() === ''){
+            throw new Error ("O Campo de titulo é obrigatorio")
+        }
+
+         if(titulo.trim().length < 3 || titulo.trim().length > 100){
+            throw new Error ("O titulo deve ter entre 3 a 100 caracteres ")
+        }
+        if(!isNaN(titulo.trim())){
+            throw new Error ("O titulo não pode conter apenas números")
+        }
+
+        if(!Tarefa.PRIORIDADES.includes(prioridade)){
+            throw new Error ('Valor de prioridade inválido, o valor deve ser: Alta, Média ou Baixa')
+        }
+
+        if (typeof concluida !== 'boolean'){
+            throw new Error ('Concluída não está como boolean')
+        }
+
+        if (descricao !== null) {
+            if (typeof descricao !== 'string'){
+                throw new Error ('A descrição deve ser texto')
+            }
+
+            descricao = descricao.trim()
+
+            if (descricao === ""){
+                descricao = null
+            } else if (descricao.length > 200){
+                throw new Error('A descrição deve ter no máximo 200 caracteres')
+            }
+        }
+
+        
+        this.titulo = titulo.trim()
+        this.descricao = descricao
+        this.prioridade = prioridade
+        this.concluida = concluida
+        this.usuarioId = usuarioId
+    }
+    concluirTarefa(){
+        if(this.concluida === true){
+            throw new Error ("Tarefa já está concluída")
+        }else{
+            return this.concluida = true
+        }
+    }
+    reabrirTarefa(){
+        if(this.concluida === false){
+            throw new Error ("Tarefa já está em aberto")
+        }else{
+            return this.concluida = false
+        }
+    }
 }
