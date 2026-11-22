@@ -29,3 +29,9 @@ export function criar(usuario) {
 
   return buscarPorId(Number(resultado.lastInsertRowid));
 }
+
+export function remover(id) {
+  const resultado = db.prepare("DELETE FROM usuarios WHERE id = ?").run(id);
+
+  return resultado.changes > 0;
+}

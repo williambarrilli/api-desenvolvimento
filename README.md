@@ -185,6 +185,16 @@ curl -X POST http://localhost:3000/usuarios \
   -d '{"nome": "Carla", "email": "carla@email.com"}'
 ```
 
+### `DELETE /usuarios/:id`
+
+Exclui um usuário sem tarefas e retorna HTTP 200 com o usuário removido
+(US-2779). Um usuário que possui tarefas retorna HTTP 409 e um usuário
+inexistente retorna HTTP 404.
+
+```bash
+curl -X DELETE http://localhost:3000/usuarios/3
+```
+
 ## Exemplo direto do repository
 
 O comando abaixo mostra `listar`, `criar`, `buscarPorId`, `atualizar` e

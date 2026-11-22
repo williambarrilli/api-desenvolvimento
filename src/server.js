@@ -11,7 +11,7 @@ app.use((request, response, next) => {
   response.setHeader("Access-Control-Allow-Origin", "*");
   response.setHeader(
     "Access-Control-Allow-Methods",
-    "GET,POST,PATCH,OPTIONS",
+    "GET,POST,PATCH,DELETE,OPTIONS",
   );
   response.setHeader(
     "Access-Control-Allow-Headers",
@@ -38,6 +38,7 @@ app.get("/usuarios", usuarioController.listarUsuarios);
 app.get("/usuarios/:id", usuarioController.buscarUsuario);
 app.get("/usuarios/:id/tarefas", usuarioController.listarTarefasDoUsuario);
 app.post("/usuarios", usuarioController.cadastrarUsuario);
+app.delete("/usuarios/:id", usuarioController.removerUsuario);
 
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
