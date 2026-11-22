@@ -129,6 +129,15 @@ Lista os usuários com `id`, `nome` e `email` (US-2772):
 curl http://localhost:3000/usuarios
 ```
 
+### `GET /usuarios/:id`
+
+Busca um usuário pelo ID (US-2773). Retorna HTTP 200 com o usuário, HTTP 400
+para ID inválido e HTTP 404 quando o usuário não existe.
+
+```bash
+curl http://localhost:3000/usuarios/1
+```
+
 ### `POST /usuarios`
 
 Cadastra um usuário (US-2771). `nome` e `email` são obrigatórios e o e-mail
