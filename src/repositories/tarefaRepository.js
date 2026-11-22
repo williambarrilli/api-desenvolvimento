@@ -125,6 +125,12 @@ export function atualizar(id, tarefa) {
 }
 
 // Remove uma tarefa e informa se alguma linha foi removida.
+export function transferir(id, usuarioId) {
+  db.prepare("UPDATE tarefas SET usuarioId = ? WHERE id = ?").run(usuarioId, id);
+
+  return buscarPorId(id);
+}
+
 export function remover(id) {
   const resultado = db.prepare("DELETE FROM tarefas WHERE id = ?").run(id);
 

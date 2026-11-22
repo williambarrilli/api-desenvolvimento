@@ -132,3 +132,41 @@ export function buscarTarefa(id) {
 export function obterResumo() {
   return tarefaRepository.resumo();
 }
+
+export function transferirTarefa(idInformado, body) {
+  const id = Number(idInformado);
+
+  if (!Number.isInteger(id) || id <= 0) {
+    const erro = new Error("ID de tarefa inválido");
+    erro.status = 400;
+    throw erro;
+  }
+
+  const usuarioId = body.usuarioId;
+
+  if (usuarioId === undefined || usuarioId === null) {
+    const erro = new Error("O campo usuarioId é obrigatório");
+    erro.status = 400;
+    throw erro;
+  }
+
+  if (!Number.isInteger(usuarioId) || usuarioId <= 0) {
+    const erro = new Error("O campo usuarioId deve ser um número inteiro positivo");
+    erro.status = 400;
+    throw erro;
+  }
+
+  if (!tarefaRepository.buscarPorId(id)) {
+    const erro = new Error("Tarefa não encontrada");
+    erro.status = 404;
+    throw erro;
+  }
+
+  if (!usuarioRepository.buscarPorId(usuarioId)) {
+    const erro = new Error("Usuário não encontrado");
+    erro.status = 404;
+    throw erro;
+  }
+
+  return tarefaRepository.transferir(id, usuarioId);
+}

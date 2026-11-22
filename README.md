@@ -115,6 +115,18 @@ curl -X POST http://localhost:3000/tarefas \
   -d '{"titulo": "Nova tarefa", "prioridade": "alta", "usuarioId": 1}'
 ```
 
+### `PATCH /tarefas/:id/usuario`
+
+Transfere a tarefa para outro usuário (US-2778), preservando os demais campos.
+Retorna HTTP 400 para `usuarioId` ausente ou inválido e HTTP 404 quando a
+tarefa ou o usuário não existe.
+
+```bash
+curl -X PATCH http://localhost:3000/tarefas/1/usuario \
+  -H "Content-Type: application/json" \
+  -d '{"usuarioId": 2}'
+```
+
 ### `GET /tarefas/resumo`
 
 Retorna os totais das tarefas (US-2770):

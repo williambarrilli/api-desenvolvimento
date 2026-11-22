@@ -31,6 +31,7 @@ app.get("/", tarefaController.obterTarefa);
 app.get("/tarefas", tarefaController.listarTarefas);
 app.get("/tarefas/resumo", tarefaController.obterResumo);
 app.post("/tarefas", tarefaController.cadastrarTarefa);
+app.patch("/tarefas/:id/usuario", tarefaController.transferirTarefa);
 app.patch("/tarefas/:id", tarefaController.atualizarTarefa);
 app.get("/tarefas/:id", tarefaController.buscarTarefa);
 app.get("/usuarios", usuarioController.listarUsuarios);
