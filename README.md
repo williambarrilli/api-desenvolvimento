@@ -121,6 +121,14 @@ Retorna os totais das tarefas (US-2770):
 curl http://localhost:3000/tarefas/resumo
 ```
 
+### `GET /usuarios`
+
+Lista os usuários com `id`, `nome` e `email` (US-2772):
+
+```bash
+curl http://localhost:3000/usuarios
+```
+
 ### `POST /usuarios`
 
 Cadastra um usuário (US-2771). `nome` e `email` são obrigatórios e o e-mail

@@ -1,6 +1,10 @@
 import { Usuario } from "../models/usuario.js";
 import * as usuarioRepository from "../repositories/usuarioRepository.js";
 
+export function listarUsuarios() {
+  return usuarioRepository.listar();
+}
+
 export function cadastrarUsuario(body) {
   let novoUsuario;
 

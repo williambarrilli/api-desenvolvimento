@@ -1,5 +1,19 @@
 import * as usuarioLogic from "../logic/usuarioLogic.js";
 
+export async function listarUsuarios(request, response) {
+  try {
+    const usuarios = await usuarioLogic.listarUsuarios();
+
+    return response.status(200).json(usuarios);
+  } catch (error) {
+    console.error(`Erro ao listar usuários: ${error.message}`);
+
+    return response.status(500).json({
+      mensagem: "Erro interno do servidor",
+    });
+  }
+}
+
 export async function cadastrarUsuario(request, response) {
   try {
     const usuario = await usuarioLogic.cadastrarUsuario(request.body ?? {});

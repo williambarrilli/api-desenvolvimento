@@ -1,5 +1,9 @@
 import db from "../database/conexao.js";
 
+export function listar() {
+  return db.prepare("SELECT id, nome, email FROM usuarios ORDER BY id").all();
+}
+
 export function buscarPorId(id) {
   const usuario = db
     .prepare("SELECT id, nome, email FROM usuarios WHERE id = ?")
