@@ -3,7 +3,7 @@
 import db from "../database/conexao.js";
 
 // O SQLite guarda booleanos como 0 e 1.
-// A API devolve esses valores como false e true.
+
 function mapearTarefa(linha) {
   if (!linha) return null;
 
